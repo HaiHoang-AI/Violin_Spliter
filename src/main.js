@@ -139,9 +139,18 @@ function playTrack(track, isStems = false, violinStemUrl = null, bgStemUrl = nul
     audioViolin.src = violinStemUrl;
     audioBg.src = bgStemUrl;
     
-    // Cross-origin support
-    audioViolin.crossOrigin = "anonymous";
-    audioBg.crossOrigin = "anonymous";
+    // Cross-origin support (only for remote URLs)
+    if (violinStemUrl.startsWith('blob:') || violinStemUrl.startsWith('data:')) {
+      audioViolin.removeAttribute('crossOrigin');
+    } else {
+      audioViolin.crossOrigin = "anonymous";
+    }
+    
+    if (bgStemUrl.startsWith('blob:') || bgStemUrl.startsWith('data:')) {
+      audioBg.removeAttribute('crossOrigin');
+    } else {
+      audioBg.crossOrigin = "anonymous";
+    }
     
     audioViolin.load();
     audioBg.load();
@@ -152,7 +161,13 @@ function playTrack(track, isStems = false, violinStemUrl = null, bgStemUrl = nul
   } else {
     // Play normal full track
     audioViolin.src = track.url;
-    audioViolin.crossOrigin = "anonymous";
+    
+    if (track.url && (track.url.startsWith('blob:') || track.url.startsWith('data:'))) {
+      audioViolin.removeAttribute('crossOrigin');
+    } else {
+      audioViolin.crossOrigin = "anonymous";
+    }
+    
     audioViolin.load();
     
     // Clear background audio
@@ -626,8 +641,23 @@ async function performAISeparation(file) {
       document.getElementById('upload-status-text').innerHTML = `<span class="text-secondary">✓ ${file.name} (Demo Simulation)</span>`;
       refineBtn.disabled = false;
       
-      // Start simulated track (Winter Largo)
-      playTrack(trackDatabase[2], false); // play winter largo with filters
+      // Start simulated track with the user's actual uploaded file
+      const localUrl = URL.createObjectURL(file);
+      const tempTrack = {
+        id: 999,
+        title: file.name,
+        author: "Uploaded Manuscript (Demo Simulation)",
+        opus: "Demo Simulation",
+        durationText: "00:00",
+        durationSeconds: 0,
+        url: localUrl,
+        art: "https://lh3.googleusercontent.com/aida-public/AB6AXuDUA_85HSXZNORKgszJPLPxISE9xc13QP5sNeMCxaG0T1Irow-K3ApeWsihWuJooKXcWg6dyYENgiOjr1vdt2BAM6UO8uJkV0LKoBPbOGdW1HDoblrItCYOdC3hYv4mtsJtHgd8-7-MAgz2a2kK_Hv5W2Mf-a5_1UM83LqgidJHSWZ1cCoMPlzx2ZXm9mt7N6FMqLtujM7BcrqI2xEYk1dEmzy2HdszWKwTKyQpMvAq3WtVCzgkKZqTbrtn2gLJTPqN1b9Qm5oNbB0",
+        quote: "Chế độ Giả lập Tách tiếng đang chạy trên tệp âm thanh của bạn.",
+        movement: "Original Track",
+        type: "solo"
+      };
+      
+      playTrack(tempTrack, false);
       renderDashboard();
     }, 2500);
   }
