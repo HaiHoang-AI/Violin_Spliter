@@ -1,0 +1,91 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "surface-container-highest": { DEFAULT: "#e5e2d8", dark: "#35352e" },
+        "on-secondary": { DEFAULT: "#ffffff", dark: "#412d00" },
+        "primary-container": { DEFAULT: "#062c21", dark: "#062c21" },
+        "background": { DEFAULT: "#fdf9ee", dark: "#14140e" },
+        "primary-fixed": { DEFAULT: "#c4ebda", dark: "#c4ebda" },
+        "primary": { DEFAULT: "#426558", dark: "#a9cfbe" },
+        "on-secondary-fixed": { DEFAULT: "#231b00", dark: "#261900" },
+        "on-primary-fixed-variant": { DEFAULT: "#2a4d41", dark: "#2a4d41" },
+        "surface-container": { DEFAULT: "#f1eee3", dark: "#202019" },
+        "error-container": { DEFAULT: "#ffdad6", dark: "#93000a" },
+        "on-tertiary-container": { DEFAULT: "#b2817f", dark: "#db6b6c" },
+        "surface-variant": { DEFAULT: "#e5e2d8", dark: "#35352e" },
+        "surface-container-high": { DEFAULT: "#ebe8de", dark: "#2a2a23" },
+        "on-error-container": { DEFAULT: "#93000a", dark: "#ffdad6" },
+        "on-primary-container": { DEFAULT: "#719586", dark: "#719586" },
+        "secondary": { DEFAULT: "#735c00", dark: "#e9c176" },
+        "on-background": { DEFAULT: "#1c1c16", dark: "#e5e2d8" },
+        "inverse-primary": { DEFAULT: "#a9cfbe", dark: "#426558" },
+        "on-surface": { DEFAULT: "#1c1c16", dark: "#e5e2d8" },
+        "on-primary": { DEFAULT: "#ffffff", dark: "#13362b" },
+        "on-surface-variant": { DEFAULT: "#414845", dark: "#c1c8c3" },
+        "surface-bright": { DEFAULT: "#fdf9ee", dark: "#3a3932" },
+        "on-primary-fixed": { DEFAULT: "#002117", dark: "#002117" },
+        "surface-dim": { DEFAULT: "#dddad0", dark: "#14140e" },
+        "inverse-on-surface": { DEFAULT: "#f4f1e6", dark: "#31312a" },
+        "primary-fixed-dim": { DEFAULT: "#a9cfbe", dark: "#a9cfbe" },
+        "outline": { DEFAULT: "#717974", dark: "#8b928e" },
+        "surface": { DEFAULT: "#fdf9ee", dark: "#14140e" },
+        "on-secondary-fixed-variant": { DEFAULT: "#574500", dark: "#5d4201" },
+        "surface-container-low": { DEFAULT: "#f7f4e9", dark: "#1c1c15" },
+        "on-secondary-container": { DEFAULT: "#745c00", dark: "#dab36a" },
+        "secondary-fixed-dim": { DEFAULT: "#e8c349", dark: "#e9c176" },
+        "secondary-fixed": { DEFAULT: "#ffe086", dark: "#ffdea5" },
+        "tertiary-fixed-dim": { DEFAULT: "#f0b9b6", dark: "#ffb3b2" },
+        "error": { DEFAULT: "#ba1a1a", dark: "#ffb4ab" },
+        "tertiary-container": { DEFAULT: "#3e1d1c", dark: "#53030e" },
+        "outline-variant": { DEFAULT: "#c1c8c3", dark: "#414845" },
+        "inverse-surface": { DEFAULT: "#31312a", dark: "#e5e2d8" },
+        "secondary-container": { DEFAULT: "#fdd65b", dark: "#604403" },
+        "on-tertiary-fixed": { DEFAULT: "#311212", dark: "#410008" },
+        "on-tertiary-fixed-variant": { DEFAULT: "#633c3b", dark: "#81262c" },
+        "surface-container-lowest": { DEFAULT: "#ffffff", dark: "#0e0f09" },
+        "on-error": { DEFAULT: "#ffffff", dark: "#690005" },
+        "on-tertiary": { DEFAULT: "#ffffff", dark: "#620e18" },
+        "tertiary-fixed": { DEFAULT: "#ffdad8", dark: "#ffdad9" },
+        "surface-tint": { DEFAULT: "#426558", dark: "#a9cfbe" },
+        "tertiary": { DEFAULT: "#250909", dark: "#ffb3b2" }
+      },
+      borderRadius: {
+        "DEFAULT": "0.125rem",
+        "lg": "0.25rem",
+        "xl": "0.5rem",
+        "full": "0.75rem"
+      },
+      spacing: {
+        "unit": "8px",
+        "margin-mobile": "20px",
+        "gutter": "24px",
+        "container-max": "1200px",
+        "margin-desktop": "64px"
+      },
+      fontFamily: {
+        "display-lg": ["Playfair Display"],
+        "display-lg-mobile": ["Playfair Display"],
+        "headline-md": ["Playfair Display"],
+        "body-lg": ["EB Garamond"],
+        "body-md": ["EB Garamond"],
+        "label-sm": ["Libre Caslon Text"]
+      },
+      fontSize: {
+        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+        "display-lg-mobile": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600"}]
+      }
+    },
+  },
+  plugins: [],
+}

@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Manuscript Library | Stradivarius Pastoral</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&amp;family=EB+Garamond:ital,wght@0,400;0,500;1,400&amp;family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        :root {
+            --emerald-deep: #062C21;
+            --gold-antique: #C5A059;
+            --parchment-alpha: rgba(229, 226, 216, 0.05);
+        }
+
+        body {
+            background-image: url("https://www.transparenttextures.com/patterns/p6.png"); /* Subtle paper grain */
+            overflow-x: hidden;
+            scrollbar-width: thin;
+            scrollbar-color: var(--gold-antique) var(--emerald-deep);
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        /* Light Mode Specifics */
+        .light body {
+            background-color: #FDF9EE;
+            color: #14140E;
+        }
+
+        .dark body {
+            background-color: #14140e;
+            color: #e5e2d8;
+        }
+
+        /* Custom Scrollbar for Chrome/Safari */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #C5A059;
+            border-radius: 10px;
+        }
+
+        .vellum-card {
+            backdrop-filter: blur(12px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .dark .vellum-card {
+            background: rgba(32, 32, 25, 0.6);
+            border: 0.5px solid rgba(197, 160, 89, 0.3);
+        }
+
+        .light .vellum-card {
+            background: #F7F4E9;
+            border: 1px solid rgba(197, 160, 89, 0.2);
+            box-shadow: inset 0 0 40px rgba(197, 160, 89, 0.05), 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .vellum-card:hover {
+            border-color: #C5A059;
+            transform: translateY(-4px);
+        }
+
+        .dark .vellum-card:hover {
+            box-shadow: 0 10px 30px -10px rgba(6, 44, 33, 0.8);
+        }
+
+        .light .vellum-card:hover {
+            box-shadow: 0 15px 35px -12px rgba(197, 160, 89, 0.3);
+        }
+
+        .ornamental-rule {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            margin: 2rem 0;
+        }
+
+        .ornamental-rule::before,
+        .ornamental-rule::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(197, 160, 89, 0.5), transparent);
+        }
+
+        .f-hole-divider {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.5rem;
+            color: #C5A059;
+            padding: 0 1rem;
+            opacity: 0.7;
+        }
+
+        .manuscript-input {
+            border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+            background: transparent;
+            transition: border-color 0.3s ease;
+        }
+
+        .manuscript-input:focus {
+            outline: none;
+            border-bottom-color: #C5A059;
+        }
+
+        .gold-glow:hover {
+            text-shadow: 0 0 8px rgba(197, 160, 89, 0.5);
+        }
+
+        @keyframes underline-expand {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        .active-tab-line {
+            height: 1px;
+            background-color: #C5A059;
+            animation: underline-expand 0.5s forwards;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-highest": {
+                        DEFAULT: "#35352e",
+                        light: "#e5e2d8"
+                      },
+                      "on-secondary": "#412d00",
+                      "primary-container": "#062c21",
+                      "background": {
+                        DEFAULT: "#14140e",
+                        light: "#FDF9EE"
+                      },
+                      "primary-fixed": "#c4ebda",
+                      "primary": {
+                        DEFAULT: "#a9cfbe",
+                        light: "#062C21"
+                      },
+                      "on-secondary-fixed": "#261900",
+                      "on-primary-fixed-variant": "#2a4d41",
+                      "surface-container": {
+                        DEFAULT: "#202019",
+                        light: "#F7F4E9"
+                      },
+                      "error-container": "#93000a",
+                      "on-tertiary-container": "#db6b6c",
+                      "surface-variant": "#35352e",
+                      "surface-container-high": {
+                        DEFAULT: "#2a2a23",
+                        light: "#ebe8de"
+                      },
+                      "on-error-container": "#ffdad6",
+                      "on-primary-container": "#719586",
+                      "secondary": "#C5A059",
+                      "on-background": {
+                        DEFAULT: "#e5e2d8",
+                        light: "#14140E"
+                      },
+                      "inverse-primary": "#426558",
+                      "on-surface": {
+                        DEFAULT: "#e5e2d8",
+                        light: "#14140E"
+                      },
+                      "on-primary": "#13362b",
+                      "on-surface-variant": "#c1c8c3",
+                      "surface-bright": "#3a3932",
+                      "on-primary-fixed": "#002117",
+                      "surface-dim": "#14140e",
+                      "inverse-on-surface": "#31312a",
+                      "primary-fixed-dim": "#a9cfbe",
+                      "outline": "#8b928e",
+                      "surface": {
+                        DEFAULT: "#14140e",
+                        light: "#F7F4E9"
+                      },
+                      "on-secondary-fixed-variant": "#5d4201",
+                      "surface-container-low": {
+                        DEFAULT: "#1c1c15",
+                        light: "#f7f4e9"
+                      },
+                      "on-secondary-container": "#dab36a",
+                      "secondary-fixed-dim": "#e9c176",
+                      "secondary-fixed": "#ffdea5",
+                      "tertiary-fixed-dim": "#ffb3b2",
+                      "error": "#ffb4ab",
+                      "tertiary-container": "#53030e",
+                      "outline-variant": "#414845",
+                      "inverse-surface": "#e5e2d8",
+                      "secondary-container": "#604403",
+                      "on-tertiary-fixed": "#410008",
+                      "on-tertiary-fixed-variant": "#81262c",
+                      "surface-container-lowest": "#0e0f09",
+                      "on-error": "#690005",
+                      "on-tertiary": "#620e18",
+                      "tertiary-fixed": "#ffdad9",
+                      "surface-tint": "#a9cfbe",
+                      "tertiary": "#ffb3b2"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "unit": "8px",
+                      "margin-mobile": "20px",
+                      "gutter": "24px",
+                      "container-max": "1200px",
+                      "margin-desktop": "64px"
+              },
+              "fontFamily": {
+                      "display-lg": ["Playfair Display"],
+                      "headline-md": ["Playfair Display"],
+                      "body-lg": ["EB Garamond"],
+                      "body-md": ["EB Garamond"],
+                      "label-sm": ["Libre Caslon Text"]
+              }
+            }
+          }
+        }
+    </script>
+</head>
+<body class="font-body-md text-on-surface dark:text-on-surface transition-colors duration-500">
+<!-- Top Navigation Bar -->
+<header class="w-full top-0 sticky z-50 bg-background/80 dark:bg-background/80 backdrop-blur-xl border-b border-secondary/30 shadow-sm shadow-primary-container transition-colors duration-500">
+<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-unit max-w-container-max mx-auto">
+<div class="flex items-center gap-4">
+<span class="font-display-lg text-secondary italic tracking-tight cursor-pointer">Stradivarius Pastoral</span>
+</div>
+<div class="hidden md:flex gap-8">
+<a class="text-secondary font-bold font-label-sm tracking-widest text-label-sm" href="#">LIBRARY</a>
+<a class="text-on-surface-variant hover:text-secondary transition-colors duration-300 font-label-sm tracking-widest text-label-sm" href="#">ARCHIVE</a>
+<a class="text-on-surface-variant hover:text-secondary transition-colors duration-300 font-label-sm tracking-widest text-label-sm" href="#">CONSERVATORY</a>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative group hidden sm:block">
+<input class="manuscript-input py-1 px-2 text-label-sm font-label-sm text-secondary placeholder:text-outline-variant w-48 transition-all focus:w-64" placeholder="Search manuscripts..." type="text"/>
+<span class="material-symbols-outlined absolute right-0 bottom-1 text-secondary text-[18px]">search</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-secondary transition-colors" id="theme-toggle">
+<span class="hidden" id="theme-toggle-dark-icon">dark_mode</span>
+<span id="theme-toggle-light-icon">light_mode</span>
+</button>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-secondary transition-colors">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-secondary transition-colors">settings</span>
+<div class="w-10 h-10 border border-secondary/50 p-0.5 rounded-full">
+<div class="w-full h-full bg-cover bg-center rounded-full" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCzlTYYudlgVEJw21mCubwLYN4NEACcRb7rjYU48PIABlcE6g_RYjpPBR3bt17B5dtFkwXVbUJ48tAsxJ3JrGEqoHjQflZHvDJ2kvK3r9GnY3bZY5Hh_DGw6_d8StLL7Nd7JLsN81dptMp602880jn6rGNLOZcEBfUKn1_85NTuDpKHkwQ6dAdkceNO1RTAKhOwrOCRsLIctdWy4rYGZU9eGbXpgIZGnVlX3kxkw0gtnrmfvQ0WmDQK7E10iNPjTPpqeDSPimIPJDk')"></div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<div class="flex max-w-[1600px] mx-auto relative">
+<!-- Sidebar Navigation -->
+<aside class="hidden lg:flex flex-col h-[calc(100vh-80px)] w-64 sticky top-20 py-margin-mobile border-r border-secondary/20 bg-surface-container-low/95 dark:bg-surface-container-low/95 backdrop-blur-md transition-colors duration-500">
+<div class="px-8 mb-12">
+<div class="mb-8">
+<p class="font-display-lg text-secondary text-[14px] uppercase tracking-[0.2em] mb-2">Curator</p>
+<h3 class="font-display-lg text-on-surface dark:text-on-surface text-headline-md italic">Maestro</h3>
+<p class="font-body-lg text-on-surface-variant text-[14px]">Violin Virtuoso</p>
+</div>
+<button class="w-full py-3 bg-gradient-to-b from-secondary/80 to-secondary border border-secondary text-on-secondary font-label-sm text-label-sm uppercase tracking-widest transition-all hover:brightness-110 active:opacity-70 shadow-lg shadow-primary-container">
+                    New Transcription
+                </button>
+</div>
+<nav class="flex-1 px-4 space-y-2">
+<div class="flex items-center gap-4 text-secondary border-l-2 border-secondary pl-4 bg-secondary-container/10 py-3 transition-all">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">library_music</span>
+<span class="font-body-lg text-body-lg">Library</span>
+</div>
+<div class="flex items-center gap-4 text-on-surface-variant hover:text-on-surface dark:hover:text-on-surface pl-4 py-3 hover:bg-surface-container-high/50 transition-all cursor-pointer">
+<span class="material-symbols-outlined">history_edu</span>
+<span class="font-body-lg text-body-lg">Manuscripts</span>
+</div>
+<div class="flex items-center gap-4 text-on-surface-variant hover:text-on-surface dark:hover:text-on-surface pl-4 py-3 hover:bg-surface-container-high/50 transition-all cursor-pointer">
+<span class="material-symbols-outlined">auto_fix_high</span>
+<span class="font-body-lg text-body-lg">Separation</span>
+</div>
+<div class="flex items-center gap-4 text-on-surface-variant hover:text-on-surface dark:hover:text-on-surface pl-4 py-3 hover:bg-surface-container-high/50 transition-all cursor-pointer">
+<span class="material-symbols-outlined">folder_open</span>
+<span class="font-body-lg text-body-lg">Archive</span>
+</div>
+<div class="flex items-center gap-4 text-on-surface-variant hover:text-on-surface dark:hover:text-on-surface pl-4 py-3 hover:bg-surface-container-high/50 transition-all cursor-pointer">
+<span class="material-symbols-outlined">school</span>
+<span class="font-body-lg text-body-lg">Conservatory</span>
+</div>
+</nav>
+<div class="px-8 pt-8 border-t border-secondary/10 space-y-4">
+<div class="flex items-center gap-3 text-on-surface-variant hover:text-secondary cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-[18px]">auto_stories</span>
+<span class="text-label-sm font-label-sm">Support</span>
+</div>
+<div class="flex items-center gap-3 text-on-surface-variant hover:text-secondary cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-[18px]">menu_book</span>
+<span class="text-label-sm font-label-sm">Journal</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 px-margin-mobile md:px-margin-desktop py-12 min-h-screen">
+<section class="mb-12">
+<div class="flex flex-col md:flex-row justify-between items-baseline mb-8">
+<div>
+<h1 class="font-display-lg text-display-lg text-on-surface dark:text-on-surface mb-2">Manuscript Library</h1>
+<p class="font-body-lg text-on-surface-variant italic">Select a movement to begin your curation.</p>
+</div>
+<div class="flex gap-6 mt-6 md:mt-0 font-label-sm text-label-sm tracking-[0.15em] uppercase">
+<button class="text-secondary border-b border-secondary pb-1">All Folios</button>
+<button class="text-on-surface-variant hover:text-secondary transition-colors pb-1">Solo Violin</button>
+<button class="text-on-surface-variant hover:text-secondary transition-colors pb-1">Full Orchestra</button>
+<button class="text-on-surface-variant hover:text-secondary transition-colors pb-1">Archived</button>
+</div>
+</div>
+<!-- Featured Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-gutter">
+<!-- Manuscript Card 1 -->
+<div class="vellum-card p-6 flex flex-col aspect-[3/4] group cursor-pointer relative overflow-hidden">
+<div class="absolute -right-4 -bottom-4 opacity-5 pointer-events-none group-hover:opacity-10 transition-opacity">
+<span class="material-symbols-outlined text-[120px] dark:text-secondary">eco</span>
+</div>
+<div class="border border-secondary/20 flex-1 flex flex-col p-4 items-center justify-center text-center">
+<span class="font-label-sm text-[10px] text-secondary/60 tracking-widest uppercase mb-4">Opus 104</span>
+<h2 class="font-display-lg text-headline-md text-secondary leading-tight mb-4">Sonata No. 1 in G Minor</h2>
+<div class="w-12 h-[1px] bg-secondary/30 mb-4"></div>
+<p class="font-body-md italic text-on-surface-variant">Adagio &amp; Fugue</p>
+</div>
+<div class="mt-4 flex justify-between items-center">
+<span class="text-label-sm font-label-sm text-secondary/70">18:24</span>
+<span class="material-symbols-outlined text-secondary opacity-0 group-hover:opacity-100 transition-opacity">play_circle</span>
+</div>
+</div>
+<!-- Manuscript Card 2 -->
+<div class="vellum-card p-6 flex flex-col aspect-[3/4] group cursor-pointer relative overflow-hidden">
+<div class="absolute -right-4 -bottom-4 opacity-5 pointer-events-none">
+<span class="material-symbols-outlined text-[120px] dark:text-secondary">history_edu</span>
+</div>
+<div class="border border-secondary/20 flex-1 flex flex-col p-4 items-center justify-center text-center">
+<span class="font-label-sm text-[10px] text-secondary/60 tracking-widest uppercase mb-4">Opus 23</span>
+<h2 class="font-display-lg text-headline-md text-secondary leading-tight mb-4">Nocturne in E Minor</h2>
+<div class="w-12 h-[1px] bg-secondary/30 mb-4"></div>
+<p class="font-body-md italic text-on-surface-variant">Midnight Manuscript</p>
+</div>
+<div class="mt-4 flex justify-between items-center">
+<span class="text-label-sm font-label-sm text-secondary/70">07:12</span>
+<span class="material-symbols-outlined text-secondary opacity-0 group-hover:opacity-100 transition-opacity">play_circle</span>
+</div>
+</div>
+<!-- Manuscript Card 3 -->
+<div class="vellum-card p-6 flex flex-col aspect-[3/4] group cursor-pointer relative overflow-hidden">
+<div class="absolute -right-4 -bottom-4 opacity-5 pointer-events-none">
+<span class="material-symbols-outlined text-[120px] dark:text-secondary">palette</span>
+</div>
+<div class="border border-secondary/20 flex-1 flex flex-col p-4 items-center justify-center text-center">
+<span class="font-label-sm text-[10px] text-secondary/60 tracking-widest uppercase mb-4">Unassigned</span>
+<h2 class="font-display-lg text-headline-md text-secondary leading-tight mb-4">Partita No. 2: Chaconne</h2>
+<div class="w-12 h-[1px] bg-secondary/30 mb-4"></div>
+<p class="font-body-md italic text-on-surface-variant">Solo Violin Transcription</p>
+</div>
+<div class="mt-4 flex justify-between items-center">
+<span class="text-label-sm font-label-sm text-secondary/70">14:50</span>
+<span class="material-symbols-outlined text-secondary opacity-0 group-hover:opacity-100 transition-opacity">play_circle</span>
+</div>
+</div>
+<!-- Manuscript Card 4 -->
+<div class="vellum-card p-6 flex flex-col aspect-[3/4] group cursor-pointer relative overflow-hidden">
+<div class="absolute -right-4 -bottom-4 opacity-5 pointer-events-none">
+<span class="material-symbols-outlined text-[120px] dark:text-secondary">potted_plant</span>
+</div>
+<div class="border border-secondary/20 flex-1 flex flex-col p-4 items-center justify-center text-center">
+<span class="font-label-sm text-[10px] text-secondary/60 tracking-widest uppercase mb-4">Opus 12</span>
+<h2 class="font-display-lg text-headline-md text-secondary leading-tight mb-4">The Four Seasons: Winter</h2>
+<div class="w-12 h-[1px] bg-secondary/30 mb-4"></div>
+<p class="font-body-md italic text-on-surface-variant">Largo Movement</p>
+</div>
+<div class="mt-4 flex justify-between items-center">
+<span class="text-label-sm font-label-sm text-secondary/70">03:45</span>
+<span class="material-symbols-outlined text-secondary opacity-0 group-hover:opacity-100 transition-opacity">play_circle</span>
+</div>
+</div>
+</div>
+<div class="ornamental-rule">
+<span class="f-hole-divider">f</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<!-- Recently Archived Section -->
+<div class="bg-surface-container-low dark:bg-surface-container-low p-8 border border-secondary/10 transition-colors duration-500">
+<h3 class="font-display-lg text-headline-md text-secondary mb-6">Archive Acquisitions</h3>
+<div class="space-y-6">
+<div class="flex items-center justify-between group cursor-pointer">
+<div class="flex gap-4 items-center">
+<div class="w-12 h-16 bg-primary-container border border-secondary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary/40">auto_stories</span>
+</div>
+<div>
+<p class="font-body-lg text-on-surface dark:text-on-surface">Caprice No. 24</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant">N. PAGANINI</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-secondary transition-colors">download</span>
+</div>
+<div class="flex items-center justify-between group cursor-pointer">
+<div class="flex gap-4 items-center">
+<div class="w-12 h-16 bg-primary-container border border-secondary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary/40">auto_stories</span>
+</div>
+<div>
+<p class="font-body-lg text-on-surface dark:text-on-surface">Violin Concerto in D</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant">J. BRAHMS</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-secondary transition-colors">download</span>
+</div>
+</div>
+</div>
+<!-- Library Stats / Context Card -->
+<div class="bg-secondary-container/5 p-8 border border-secondary/10 flex flex-col justify-center">
+<div class="flex items-center gap-4 mb-4">
+<span class="material-symbols-outlined text-secondary text-[40px]">menu_book</span>
+<h3 class="font-display-lg text-headline-md text-secondary italic">Library Insights</h3>
+</div>
+<p class="font-body-lg text-on-surface-variant mb-6">You have cataloged 1,248 manuscripts this season. Your most studied era remains the Baroque period, specifically the works of Corelli and Vivaldi.</p>
+<div class="flex gap-4">
+<div class="bg-primary-container/40 dark:bg-primary-container/40 px-4 py-2 border border-secondary/20">
+<p class="text-label-sm font-label-sm text-secondary/60">COLLECTION</p>
+<p class="font-display-lg text-on-surface dark:text-on-surface">94% Complete</p>
+</div>
+<div class="bg-primary-container/40 dark:bg-primary-container/40 px-4 py-2 border border-secondary/20">
+<p class="text-label-sm font-label-sm text-secondary/60">SESSIONS</p>
+<p class="font-display-lg text-on-surface dark:text-on-surface">428 Hours</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+<!-- Music Player / Bottom Bar -->
+<footer class="fixed bottom-0 w-full h-24 z-50 bg-surface-container-highest/90 dark:bg-surface-container-highest/90 backdrop-blur-2xl border-t border-secondary/40 shadow-[0_-4px_20px_rgba(6,44,33,0.5)] transition-colors duration-500">
+<div class="max-w-container-max mx-auto h-full flex items-center px-margin-mobile md:px-margin-desktop justify-between">
+<!-- Track Info -->
+<div class="flex items-center gap-4 min-w-[240px]">
+<div class="w-14 h-14 bg-cover bg-center border border-secondary/30" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAX8Ie4xkUJgwGiboi5SA-MUVzBwaI-Zo450WxIMOPYEretu6EA-TELnAs6v5Gn2mZmapD4wD6eL6GKqIZuqwMSSOOekfN1lUE-YnKxxQ4n47IJnQmDsKieEu97cHcQGyo1n5YFkkYtQOtFCZGmV7Oq_TQ_y_gVa5u0ZqtUd4WKs8RRQLuaTsaoAhjTtl4cDdRVFm-MSPkK5nIvcR4hRTcb4Sd4cvfGPhOed-vcSZNYoiRDbA_Q2szepZZ8Y3MetwyP3RdAdYQFlRA')"></div>
+<div>
+<h4 class="font-display-lg text-secondary text-[16px]">Sonata No. 1 in G Minor</h4>
+<p class="font-body-md text-on-surface-variant text-[13px]">Adagio • J.S. Bach</p>
+</div>
+</div>
+<!-- Controls -->
+<div class="flex flex-col items-center gap-2 flex-1 max-w-xl px-8">
+<div class="flex items-center gap-8 text-on-surface/70 dark:text-on-surface/70">
+<span class="material-symbols-outlined cursor-pointer hover:text-secondary transition-all">skip_previous</span>
+<span class="material-symbols-outlined text-[48px] text-secondary cursor-pointer hover:scale-110 active:scale-95 transition-transform" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-secondary transition-all">skip_next</span>
+</div>
+<!-- Seek Bar -->
+<div class="w-full flex items-center gap-3">
+<span class="text-[10px] font-label-sm text-on-surface-variant">04:12</span>
+<div class="flex-1 h-[2px] bg-secondary/20 relative group cursor-pointer">
+<div class="absolute left-0 top-0 h-full bg-secondary w-1/3 shadow-[0_0_8px_rgba(233,193,118,0.4)]"></div>
+<!-- Scrubber -->
+<div class="absolute left-1/3 top-1/2 -translate-y-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-secondary rotate-45 border border-on-secondary opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</div>
+<span class="text-[10px] font-label-sm text-on-surface-variant">18:24</span>
+</div>
+</div>
+<!-- Volume & Actions -->
+<div class="flex items-center gap-6 min-w-[240px] justify-end">
+<div class="flex items-center gap-3 text-on-surface/70 dark:text-on-surface/70">
+<span class="material-symbols-outlined text-[20px]">volume_up</span>
+<div class="w-24 h-[1px] bg-secondary/20 relative">
+<div class="absolute left-0 top-0 h-full bg-secondary w-3/4"></div>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-secondary">queue_music</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-secondary">fullscreen</span>
+</div>
+</div>
+</footer>
+<!-- Atmosphere / Decorative Grain Script -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+            const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+            const htmlElement = document.documentElement;
+
+            // Initialize icons based on current mode
+            const updateIcons = () => {
+                if (htmlElement.classList.contains('dark')) {
+                    themeToggleDarkIcon.classList.remove('hidden');
+                    themeToggleLightIcon.classList.add('hidden');
+                } else {
+                    themeToggleDarkIcon.classList.add('hidden');
+                    themeToggleLightIcon.classList.remove('hidden');
+                }
+            };
+
+            updateIcons();
+
+            themeToggleBtn.addEventListener('click', () => {
+                htmlElement.classList.toggle('dark');
+                htmlElement.classList.toggle('light');
+                updateIcons();
+            });
+
+            // Card hover effect update for light/dark modes
+            const cards = document.querySelectorAll('.vellum-card');
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const isDark = htmlElement.classList.contains('dark');
+                    const baseColor = isDark ? 'rgba(32, 32, 25, 0.6)' : '#F7F4E9';
+                    const glowColor = isDark ? 'rgba(197, 160, 89, 0.05)' : 'rgba(197, 160, 89, 0.1)';
+                    card.style.background = `radial-gradient(circle at ${x}px ${y}px, ${glowColor} 0%, ${baseColor} 70%)`;
+                });
+                card.addEventListener('mouseleave', () => {
+                    const isDark = htmlElement.classList.contains('dark');
+                    card.style.background = isDark ? 'rgba(32, 32, 25, 0.6)' : '#F7F4E9';
+                });
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Stradivarius Pastoral | Separation Studio</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&amp;family=EB+Garamond:wght@400;500&amp;family=Libre+Caslon+Text:wght@400;700&amp;family=Hanken+Grotesk:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .vellum-layer {
+            background: rgba(var(--surface-rgb, 28, 28, 21), 0.15);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            transition: box-shadow 0.5s ease, transform 0.5s ease, background 0.3s ease;
+        }
+        .vellum-layer:hover {
+            box-shadow: 0 0 30px rgba(197, 160, 89, 0.15);
+        }
+        .antique-gold-border {
+            border: 0.5px solid rgba(197, 160, 89, 0.3);
+        }
+        .brass-slider {
+            transition: opacity 0.3s ease;
+        }
+        .brass-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            background: radial-gradient(circle at 30% 30%, #e9c176, #604403);
+            border: 1px solid #c5a059;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+        }
+        .brass-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 12px rgba(233, 193, 118, 0.6);
+        }
+        .brass-slider::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            background: radial-gradient(circle at 30% 30%, #e9c176, #604403);
+            border: 1px solid #c5a059;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+        }
+        .brass-slider::-moz-range-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 12px rgba(233, 193, 118, 0.6);
+        }
+        .waveform-score {
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+        .botanical-watermark {
+            opacity: 0.08;
+            pointer-events: none;
+            filter: sepia(1) saturate(0.5);
+            transition: opacity 0.5s ease;
+        }
+        .dark .botanical-watermark {
+            opacity: 0.05;
+        }
+        .gold-glow:hover {
+            box-shadow: 0 0 25px rgba(197, 160, 89, 0.5);
+            transform: translateY(-2px);
+        }
+        .interactive-glow {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .interactive-glow:hover {
+            text-shadow: 0 0 10px rgba(233, 193, 118, 0.4);
+            filter: drop-shadow(0 0 5px rgba(233, 193, 118, 0.2));
+        }
+        #shader-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+        :root {
+            --surface-rgb: 247, 244, 233;
+        }
+        .dark {
+            --surface-rgb: 28, 28, 21;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": {
+                            DEFAULT: "#E5E2D8",
+                            dark: "#35352e"
+                        },
+                        "on-secondary": {
+                            DEFAULT: "#ffffff",
+                            dark: "#412d00"
+                        },
+                        "primary-container": {
+                            DEFAULT: "#062c21",
+                            dark: "#062c21"
+                        },
+                        "background": {
+                            DEFAULT: "#FDF9EE",
+                            dark: "#14140e"
+                        },
+                        "primary-fixed": "#c4ebda",
+                        "primary": {
+                            DEFAULT: "#00150e",
+                            dark: "#a9cfbe"
+                        },
+                        "on-secondary-fixed": "#261900",
+                        "on-primary-fixed-variant": "#2a4d41",
+                        "surface-container": {
+                            DEFAULT: "#F1EEE3",
+                            dark: "#202019"
+                        },
+                        "error-container": "#93000a",
+                        "on-tertiary-container": "#db6b6c",
+                        "surface-variant": "#e5e2d8",
+                        "surface-container-high": "#ebe8de",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-container": "#719586",
+                        "secondary": "#735c00",
+                        "secondary-dark": "#e9c176",
+                        "on-background": {
+                            DEFAULT: "#14140E",
+                            dark: "#e5e2d8"
+                        },
+                        "inverse-primary": "#426558",
+                        "on-surface": {
+                            DEFAULT: "#14140E",
+                            dark: "#e5e2d8"
+                        },
+                        "on-primary": {
+                            DEFAULT: "#ffffff",
+                            dark: "#13362b"
+                        },
+                        "on-surface-variant": {
+                            DEFAULT: "#414845",
+                            dark: "#c1c8c3"
+                        },
+                        "surface-bright": "#fdf9ee",
+                        "on-primary-fixed": "#002117",
+                        "surface-dim": "#dddad0",
+                        "inverse-on-surface": "#31312a",
+                        "primary-fixed-dim": "#a9cfbe",
+                        "outline": "#717974",
+                        "surface": {
+                            DEFAULT: "#FDF9EE",
+                            dark: "#14140e"
+                        },
+                        "on-secondary-fixed-variant": "#5d4201",
+                        "surface-container-low": {
+                            DEFAULT: "#f7f4e9",
+                            dark: "#1c1c15"
+                        },
+                        "on-secondary-container": "#745c00",
+                        "secondary-fixed-dim": "#e8c349",
+                        "secondary-fixed": "#ffe086",
+                        "tertiary-fixed-dim": "#f0b9b6",
+                        "error": "#ba1a1a",
+                        "tertiary-container": "#3e1d1c",
+                        "outline-variant": "#c1c8c3",
+                        "inverse-surface": "#31312a",
+                        "secondary-container": "#fdd65b",
+                        "on-tertiary-fixed": "#311212",
+                        "on-tertiary-fixed-variant": "#633c3b",
+                        "surface-container-lowest": {
+                            DEFAULT: "#ffffff",
+                            dark: "#0e0f09"
+                        },
+                        "on-error": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed": "#ffdad8",
+                        "surface-tint": "#426558",
+                        "tertiary": "#250909"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "unit": "8px",
+                        "margin-mobile": "20px",
+                        "gutter": "24px",
+                        "container-max": "1200px",
+                        "margin-desktop": "64px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Playfair Display"],
+                        "display-lg-mobile": ["Playfair Display"],
+                        "headline-md": ["Playfair Display"],
+                        "body-lg": ["EB Garamond"],
+                        "body-md": ["EB Garamond"],
+                        "label-sm": ["Libre Caslon Text"],
+                        "label-md": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "display-lg-mobile": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background dark:bg-background-dark text-on-surface dark:text-on-surface-dark font-body-md selection:bg-secondary/30 transition-colors duration-500">
+<!-- Top Navigation Bar -->
+<header class="w-full top-0 sticky bg-background/80 dark:bg-background-dark/80 backdrop-blur-xl border-b border-secondary/30 dark:border-secondary-dark/30 shadow-sm shadow-primary-container z-50 transition-colors duration-500">
+<nav class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-unit max-w-container-max mx-auto">
+<div class="flex items-center gap-4">
+<span class="font-display-lg text-primary dark:text-primary-dark italic tracking-tight text-display-lg-mobile md:text-display-lg interactive-glow">Stradivarius Pastoral</span>
+</div>
+<div class="flex items-center gap-gutter">
+<div class="hidden md:flex items-center gap-8 font-label-sm uppercase tracking-widest text-on-surface-variant dark:text-on-surface-variant-dark">
+<a class="hover:text-secondary dark:hover:text-secondary-dark transition-all duration-300 interactive-glow" href="#">Archives</a>
+<a class="text-secondary dark:text-secondary-dark font-bold interactive-glow" href="#">Separation</a>
+<a class="hover:text-secondary dark:hover:text-secondary-dark transition-all duration-300 interactive-glow" href="#">Manuscripts</a>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary dark:text-primary-dark cursor-pointer active:opacity-70 interactive-glow transition-colors" data-icon="light_mode" id="theme-toggle">light_mode</span>
+<span class="material-symbols-outlined text-primary dark:text-primary-dark cursor-pointer active:opacity-70 interactive-glow transition-colors" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined text-primary dark:text-primary-dark cursor-pointer active:opacity-70 interactive-glow transition-colors" data-icon="settings">settings</span>
+<div class="w-10 h-10 rounded-full border border-secondary/50 dark:border-secondary-dark/50 overflow-hidden bg-surface-container dark:bg-surface-container-dark transition-all hover:scale-110">
+<img class="w-full h-full object-cover" data-alt="A refined user profile avatar set within a gold-rimmed circular frame, featuring a high-society scholarly aesthetic. The background of the avatar is a deep emerald linen texture, with a subtle golden violin scroll visible in the periphery. The lighting is dramatic and moody, reflecting a dark academia ambiance." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcRP2twnK_zcCyUknI7XGpDdXlUYsIBTgrazcamDgHkjM8jx4JtAY9G-fHDJRhEXucZfg3jbYPx6DSABd-g0Cpim1566oNpqYXogyl9X_9kQzu45dg6FmwPe4KQWbVb0PHcrTNB7gFadCu_hwrKeainq6bOCh4X1nFScrPqH2LgDqmlJjvemkBv0Gm0CvN-8hYwzCllkJNZdtvkQlyM3tpcVANk1mo3zRhHxrkFHrXKUsuOmlBAk675HePq_l8_3SHpGX-5lLpW14"/>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<main class="relative min-h-[calc(100vh-80px)] px-margin-mobile md:px-margin-desktop py-12 flex flex-col items-center justify-center overflow-hidden">
+<!-- Decorative Background Elements -->
+<div class="absolute top-0 left-0 w-64 h-64 botanical-watermark rotate-12 -translate-x-1/4 -translate-y-1/4">
+<img class="w-full h-full" data-alt="Intricate botanical line art featuring delicate wild roses and thorny vines, styled like an 18th-century scientific illustration. The linework is fine and elegant, rendered in a faded sepia-gold tone that blends softly into the deep emerald background. The composition is organic and airy, suggesting a secluded manor garden." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9nt72dnHSk5Z-oZBeXbYNntJTDzkOlC8jkYM34WkxT-cOyADHmTRWLKhoL4wp-KXfBomks17--YdN6fj78yr5B-G84byfJfLWxr0Z61NwfM-j1l8uy93QMo5cNCtil4nm6UXcJbllEoYFi1x-8XdtWQvbGMGLxpJv47nmOBFNlH9arVh9HjkDwieUmhILvrLXDPKw-Zpz6737VD8mK4-nTFNMyN5bwIOB1FRYvicSPiLnKpORumnhmJMSg9dsoTJA4nBxNXBVx6Y"/>
+</div>
+<div class="absolute bottom-0 right-0 w-80 h-80 botanical-watermark -rotate-12 translate-x-1/4 translate-y-1/4">
+<img class="w-full h-full" data-alt="A cluster of vintage jasmine blossoms and layered leaves illustrated in a classical etching style. The artwork is subtle and translucent, evoking the texture of aged parchment and pressed flowers found within an old conservatory journal. The color palette is muted gold and dark forest green, maintaining a dark academia aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjcYyfBApAd6Y9udP3v2lIiSc7Fy3PiSUdjOw1R9fGnhu1p3UtvVrtLUQdYazU-p0fpm6Ee2SaTPwLHqKuqaoEyqzYwScTAijpJA8VgwbV70S-az4oRjKGts4xR9mKwu84cSEVhROCgiopKbYDElbI1UULyQ4j_zvpyzuJtejBon6X2w0ccGIhUAfGYRWIF2_qKLSioc5pahNXEpInMMfvuHu9JKxvPQM7E5x84gM3UUOR0pFOe3kW_vJ_KN2Tmb1CUrpYyEkbxP0"/>
+</div>
+<!-- Central Studio Workspace -->
+<div class="w-full max-w-4xl relative z-10">
+<div class="vellum-layer antique-gold-border rounded-lg p-gutter md:p-12 flex flex-col gap-12 shadow-2xl shadow-primary-container dark:shadow-black/50">
+<!-- Header Section -->
+<div class="text-center space-y-2">
+<h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-secondary dark:text-secondary-dark interactive-glow">The Separation Studio</h1>
+<p class="font-body-lg text-on-surface-variant dark:text-on-surface-variant-dark max-w-xl mx-auto italic">Isolate the voice of the violin from the orchestral ensemble with precision and grace.</p>
+<div class="flex justify-center py-4">
+<div class="h-[1px] w-32 bg-secondary/30 dark:bg-secondary-dark/30 relative">
+<span class="absolute left-1/2 -top-2 -translate-x-1/2 text-secondary dark:text-secondary-dark text-xs material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">eco</span>
+</div>
+</div>
+</div>
+<!-- Upload / Waveform Section with WebGL Shader -->
+<div class="relative w-full aspect-[21/9] bg-surface-container-lowest/50 dark:bg-surface-container-lowest-dark/50 rounded-xl antique-gold-border flex items-center justify-center overflow-hidden group cursor-pointer transition-all hover:bg-surface-container-lowest/80 dark:hover:bg-surface-container-lowest-dark/80 gold-glow">
+<!-- WebGL Background -->
+<canvas id="shader-canvas"></canvas>
+<!-- Placeholder Waveform styled like Score -->
+<div class="absolute inset-0 flex flex-col justify-center gap-3 opacity-20 dark:opacity-30 waveform-score">
+<div class="h-px w-full bg-on-surface-variant/30 dark:bg-on-surface-variant-dark/30"></div>
+<div class="h-px w-full bg-on-surface-variant/30 dark:bg-on-surface-variant-dark/30"></div>
+<div class="h-px w-full bg-on-surface-variant/30 dark:bg-on-surface-variant-dark/30"></div>
+<div class="h-px w-full bg-on-surface-variant/30 dark:bg-on-surface-variant-dark/30"></div>
+<div class="h-px w-full bg-on-surface-variant/30 dark:bg-on-surface-variant-dark/30"></div>
+</div>
+<div class="flex flex-col items-center gap-4 text-on-surface-variant dark:text-on-surface-variant-dark group-hover:text-secondary dark:group-hover:text-secondary-dark transition-all duration-500 transform group-hover:scale-105">
+<span class="material-symbols-outlined text-5xl transition-all" data-icon="cloud_upload">cloud_upload</span>
+<div class="text-center">
+<p class="font-label-sm uppercase tracking-[0.2em]">Select Audio Manuscript</p>
+<p class="text-xs opacity-60">WAV, FLAC, or MP3 up to 50MB</p>
+</div>
+</div>
+</div>
+<!-- Control Panel -->
+<div class="grid md:grid-cols-2 gap-12 px-4 md:px-8">
+<!-- Left Control: Violin Intensity -->
+<div class="space-y-6 group">
+<div class="flex justify-between items-center transition-colors group-hover:text-secondary dark:group-hover:text-secondary-dark">
+<label class="font-label-sm uppercase tracking-widest text-on-surface dark:text-on-surface-dark">Violin Intensity</label>
+<span class="font-label-sm text-secondary dark:text-secondary-dark">75%</span>
+</div>
+<div class="relative pt-2">
+<input class="w-full h-1 bg-surface-container-highest dark:bg-surface-container-highest-dark rounded-full appearance-none brass-slider" max="100" min="0" type="range" value="75"/>
+<div class="absolute left-0 top-[10px] h-1 bg-secondary dark:bg-secondary-dark rounded-full pointer-events-none transition-all duration-300" style="width: 75%"></div>
+</div>
+<p class="text-xs italic text-on-surface-variant dark:text-on-surface-variant-dark">Enhances the presence and bow-texture of the lead violin track.</p>
+</div>
+<!-- Right Control: Orchestral Background -->
+<div class="space-y-6 group">
+<div class="flex justify-between items-center transition-colors group-hover:text-secondary dark:group-hover:text-secondary-dark">
+<label class="font-label-sm uppercase tracking-widest text-on-surface dark:text-on-surface-dark">Orchestral Background</label>
+<span class="font-label-sm text-secondary dark:text-secondary-dark">40%</span>
+</div>
+<div class="relative pt-2">
+<input class="w-full h-1 bg-surface-container-highest dark:bg-surface-container-highest-dark rounded-full appearance-none brass-slider" max="100" min="0" type="range" value="40"/>
+<div class="absolute left-0 top-[10px] h-1 bg-secondary dark:bg-secondary-dark rounded-full pointer-events-none transition-all duration-300" style="width: 40%"></div>
+</div>
+<p class="text-xs italic text-on-surface-variant dark:text-on-surface-variant-dark">Adjust the volume of the accompanying strings and woodwinds.</p>
+</div>
+</div>
+<!-- Action Button -->
+<div class="flex justify-center pt-8">
+<button class="bg-gradient-to-b from-secondary to-[#c5a059] dark:from-secondary-dark dark:to-[#c5a059] text-on-secondary dark:text-on-secondary-dark font-label-sm uppercase tracking-[0.3em] px-12 py-4 rounded-full border border-secondary dark:border-secondary-dark transition-all gold-glow active:scale-95 flex items-center gap-3">
+<span class="material-symbols-outlined text-lg animate-pulse" data-icon="auto_fix_high">auto_fix_high</span>
+                    Refine Sound
+                </button>
+</div>
+</div>
+</div>
+</main>
+<!-- Side Navigation Bar (Maestro Profile) -->
+<aside class="hidden xl:flex flex-col h-screen py-margin-mobile bg-surface-container-low/95 dark:bg-surface-container-low-dark/95 backdrop-blur-md h-full w-64 fixed left-0 top-0 border-r border-secondary/20 dark:border-secondary-dark/20 shadow-2xl shadow-primary-container dark:shadow-black/50 z-40 transition-colors duration-500">
+<div class="px-8 mb-12">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-12 h-12 rounded-full border border-secondary/30 dark:border-secondary-dark/30 overflow-hidden transition-transform hover:scale-110">
+<img class="w-full h-full object-cover" data-alt="A portrait of a curator in a private library, lit by soft candle flame. The aesthetic is dark academia with antique books and a violin in the background. High-quality oil painting style, warm tones, and deep shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7ioyXCYifiALLjDOJ-VhCQT24Onh3svoZFqv7q9rjZyHlucpf4jJ3Wle6aQKgbT7ZUIEF3QmSWFuKTqFg5CDCfkaTaQGrDvy9C3vKZRZ_6pZzMjMS3VTdMTsU5ZuuSuIgwNIVUsqkD0fa-OQjr_YO_H6FveBOUcOICGUZ-Nkkm-27k8ZJhrqOnUj6Nec13suCaUJEv7TEJyXbEgBSAEoAHDYFcJM16598QHi0wpNu90URjzcYANAhpIkIEuQTbpzhBLwDiRvF4dA"/>
+</div>
+<div>
+<h3 class="font-headline-md text-secondary dark:text-secondary-dark text-sm">Maestro</h3>
+<p class="text-xs text-on-surface-variant dark:text-on-surface-variant-dark italic">Violin Virtuoso</p>
+</div>
+</div>
+<button class="w-full py-3 bg-secondary-container/20 dark:bg-secondary-container-dark/20 border border-secondary/40 dark:border-secondary-dark/40 text-secondary dark:text-secondary-dark font-label-sm uppercase tracking-widest hover:bg-secondary-container/40 dark:hover:bg-secondary-container-dark/40 transition-all gold-glow">
+            New Transcription
+        </button>
+</div>
+<nav class="flex-1 flex flex-col gap-2">
+<div class="flex items-center gap-4 py-3 cursor-pointer text-on-surface-variant dark:text-on-surface-variant-dark hover:text-on-surface dark:hover:text-on-surface-dark pl-8 transition-all group">
+<span class="material-symbols-outlined group-hover:text-secondary dark:group-hover:text-secondary-dark group-hover:scale-110 transition-transform" data-icon="library_music">library_music</span>
+<span class="font-body-lg group-hover:translate-x-1 transition-transform">Library</span>
+</div>
+<div class="flex items-center gap-4 py-3 cursor-pointer text-on-surface-variant dark:text-on-surface-variant-dark hover:text-on-surface dark:hover:text-on-surface-dark pl-8 transition-all group">
+<span class="material-symbols-outlined group-hover:text-secondary dark:group-hover:text-secondary-dark group-hover:scale-110 transition-transform" data-icon="history_edu">history_edu</span>
+<span class="font-body-lg group-hover:translate-x-1 transition-transform">Manuscripts</span>
+</div>
+<div class="flex items-center gap-4 py-3 cursor-pointer text-secondary dark:text-secondary-dark border-l-2 border-secondary dark:border-secondary-dark pl-8 bg-secondary-container/10 dark:bg-secondary-container-dark/10">
+<span class="material-symbols-outlined" data-icon="auto_fix_high" style="font-variation-settings: 'FILL' 1;">auto_fix_high</span>
+<span class="font-body-lg font-bold">Separation</span>
+</div>
+<div class="flex items-center gap-4 py-3 cursor-pointer text-on-surface-variant dark:text-on-surface-variant-dark hover:text-on-surface dark:hover:text-on-surface-dark pl-8 transition-all group">
+<span class="material-symbols-outlined group-hover:text-secondary dark:group-hover:text-secondary-dark group-hover:scale-110 transition-transform" data-icon="folder_open">folder_open</span>
+<span class="font-body-lg group-hover:translate-x-1 transition-transform">Archive</span>
+</div>
+<div class="flex items-center gap-4 py-3 cursor-pointer text-on-surface-variant dark:text-on-surface-variant-dark hover:text-on-surface dark:hover:text-on-surface-dark pl-8 transition-all group">
+<span class="material-symbols-outlined group-hover:text-secondary dark:group-hover:text-secondary-dark group-hover:scale-110 transition-transform" data-icon="school">school</span>
+<span class="font-body-lg group-hover:translate-x-1 transition-transform">Conservatory</span>
+</div>
+</nav>
+<div class="mt-auto px-8 flex flex-col gap-4 border-t border-secondary/10 dark:border-secondary-dark/10 pt-8">
+<div class="flex items-center gap-4 text-on-surface-variant dark:text-on-surface-variant-dark hover:text-secondary dark:hover:text-secondary-dark cursor-pointer transition-colors group">
+<span class="material-symbols-outlined text-sm group-hover:scale-110 transition-transform" data-icon="auto_stories">auto_stories</span>
+<span class="text-sm font-label-sm uppercase">Support</span>
+</div>
+<div class="flex items-center gap-4 text-on-surface-variant dark:text-on-surface-variant-dark hover:text-secondary dark:hover:text-secondary-dark cursor-pointer transition-colors group">
+<span class="material-symbols-outlined text-sm group-hover:scale-110 transition-transform" data-icon="menu_book">menu_book</span>
+<span class="text-sm font-label-sm uppercase">Journal</span>
+</div>
+</div>
+</aside>
+<!-- Bottom Player Control -->
+<footer class="fixed bottom-0 w-full h-24 z-50 bg-surface-container-highest/90 dark:bg-surface-container-highest-dark/90 backdrop-blur-2xl border-t border-secondary/40 dark:border-secondary-dark/40 shadow-[0_-4px_20px_rgba(6,44,33,0.5)] flex items-center justify-center px-margin-mobile transition-colors duration-500">
+<div class="max-w-4xl w-full flex items-center justify-between gap-8">
+<div class="hidden md:flex flex-col gap-1 w-48 overflow-hidden">
+<p class="font-label-sm text-secondary dark:text-secondary-dark truncate interactive-glow">Violin Partita No. 2 in D Minor</p>
+<p class="text-[10px] text-on-surface-variant dark:text-on-surface-variant-dark uppercase tracking-widest">J.S. Bach • Separation in progress</p>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="flex items-center gap-8">
+<span class="material-symbols-outlined text-on-surface/70 dark:text-on-surface-dark/70 cursor-pointer hover:text-secondary dark:hover:text-secondary-dark hover:scale-125 transition-all duration-300" data-icon="skip_previous">skip_previous</span>
+<span class="material-symbols-outlined text-secondary dark:text-secondary-dark text-5xl cursor-pointer hover:scale-110 active:scale-95 transition-all duration-300 interactive-glow" data-icon="play_circle" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+<span class="material-symbols-outlined text-on-surface/70 dark:text-on-surface-dark/70 cursor-pointer hover:text-secondary dark:hover:text-secondary-dark hover:scale-125 transition-all duration-300" data-icon="skip_next">skip_next</span>
+</div>
+<div class="w-full max-w-md h-1 bg-surface-container dark:bg-surface-container-dark rounded-full relative overflow-hidden group cursor-pointer">
+<div class="absolute left-0 top-0 h-full bg-secondary dark:bg-secondary-dark w-1/3 shadow-[0_0_8px_rgba(233,193,118,0.5)] transition-all duration-700 ease-in-out"></div>
+</div>
+</div>
+<div class="hidden md:flex items-center gap-4 w-48 justify-end">
+<span class="material-symbols-outlined text-on-surface/70 dark:text-on-surface-dark/70 hover:text-secondary dark:hover:text-secondary-dark transition-colors" data-icon="volume_up">volume_up</span>
+<div class="w-24 h-1 bg-surface-container dark:bg-surface-container-dark rounded-full relative">
+<div class="h-full bg-on-surface/30 dark:bg-on-surface-dark/30 w-3/4 rounded-full transition-all"></div>
+</div>
+</div>
+</div>
+</footer>
+<script>
+    // Theme Toggle Logic
+    const themeToggle = document.getElementById('theme-toggle');
+    const htmlElement = document.documentElement;
+
+    themeToggle.addEventListener('click', () => {
+        if (htmlElement.classList.contains('dark')) {
+            htmlElement.classList.remove('dark');
+            themeToggle.textContent = 'dark_mode';
+            localStorage.setItem('theme', 'light');
+        } else {
+            htmlElement.classList.add('dark');
+            themeToggle.textContent = 'light_mode';
+            localStorage.setItem('theme', 'dark');
+        }
+    });
+
+    // Check for saved theme
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+        htmlElement.classList.remove('dark');
+        themeToggle.textContent = 'dark_mode';
+    } else {
+        htmlElement.classList.add('dark');
+        themeToggle.textContent = 'light_mode';
+    }
+
+    // WebGL Shader Animation for the Manuscript Area
+    const canvas = document.getElementById('shader-canvas');
+    const gl = canvas.getContext('webgl');
+
+    const vertexShaderSrc = `
+        attribute vec2 position;
+        varying vec2 v_texCoord;
+        void main() {
+            v_texCoord = position * 0.5 + 0.5;
+            v_texCoord.y = 1.0 - v_texCoord.y;
+            gl_Position = vec4(position, 0.0, 1.0);
+        }
+    `;
+
+    const fragmentShaderSrc = `
+        precision highp float;
+
+        varying vec2 v_texCoord;
+        uniform float u_time;
+        uniform vec2 u_resolution;
+        uniform vec2 u_mouse;
+        uniform bool u_isDark;
+
+        // Stradivarius Pastoral Palette
+        vec3 emerald = vec3(0.02, 0.17, 0.13); // #062c21
+        vec3 gold = vec3(0.83, 0.69, 0.22);    // #d4b038
+        vec3 dark = vec3(0.08, 0.08, 0.05);    // #14140e
+        vec3 ivory = vec3(0.99, 0.98, 0.93);   // #FDF9EE
+
+        float random(vec2 st) {
+            return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
+        }
+
+        float noise(vec2 st) {
+            vec2 i = floor(st);
+            vec2 f = fract(st);
+            float a = random(i);
+            float b = random(i + vec2(1.0, 0.0));
+            float c = random(i + vec2(0.0, 1.0));
+            float d = random(i + vec2(1.0, 1.0));
+            vec2 u = f * f * (3.0 - 2.0 * f);
+            return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
+        }
+
+        void main() {
+            vec2 uv = v_texCoord;
+            vec2 center = uv - 0.5;
+            center.x *= u_resolution.x / u_resolution.y;
+            
+            // Wave animation - like violin strings vibration
+            float t = u_time * 0.5;
+            float wave = sin(uv.x * 10.0 + t) * 0.02;
+            wave += sin(uv.x * 20.0 - t * 0.8) * 0.01;
+            
+            float line = abs(center.y + wave);
+            float glow = 0.005 / pow(line, 0.8);
+            
+            // Multiple flowing "strings"
+            float string1 = 0.002 / abs(center.y + sin(uv.x * 8.0 + t * 1.2) * 0.05);
+            float string2 = 0.002 / abs(center.y + cos(uv.x * 12.0 - t * 0.9) * 0.08);
+            
+            // Background flow
+            float n = noise(uv * 3.0 + t * 0.2);
+            vec3 bgColor = u_isDark ? mix(dark, emerald * 0.5, n) : mix(ivory, vec3(0.95, 0.93, 0.88), n);
+            vec3 color = bgColor;
+            
+            // Add strings glow
+            vec3 glowColor = u_isDark ? gold : vec3(0.45, 0.36, 0.0);
+            color += glowColor * (glow + string1 + string2) * 0.5;
+            
+            // Dust particles / Embers (Poetic garden vibe)
+            float particles = 0.0;
+            for(float i = 0.0; i < 20.0; i++) {
+                vec2 pos = vec2(random(vec2(i, 1.0)), random(vec2(i, 2.0)));
+                pos.y = fract(pos.y - t * 0.1);
+                float size = 0.001 * random(vec2(i, 3.0));
+                float dist = distance(uv, pos);
+                particles += size / dist;
+            }
+            color += glowColor * particles * 0.2;
+
+            // Vignette
+            float d = length(uv - 0.5);
+            color *= smoothstep(0.8, 0.2, d);
+
+            gl_FragColor = vec4(color, 1.0);
+        }
+    `;
+
+    function createShader(gl, type, source) {
+        const shader = gl.createShader(type);
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+            console.error(gl.getShaderInfoLog(shader));
+            gl.deleteShader(shader);
+            return null;
+        }
+        return shader;
+    }
+
+    const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSrc);
+    const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSrc);
+    const program = gl.createProgram();
+    gl.attachShader(program, vertexShader);
+    gl.attachShader(program, fragmentShader);
+    gl.linkProgram(program);
+
+    const positionBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+
+    const positionLocation = gl.getAttribLocation(program, 'position');
+    const timeLocation = gl.getUniformLocation(program, 'u_time');
+    const resolutionLocation = gl.getUniformLocation(program, 'u_resolution');
+    const isDarkLocation = gl.getUniformLocation(program, 'u_isDark');
+
+    function resize() {
+        canvas.width = canvas.clientWidth * window.devicePixelRatio;
+        canvas.height = canvas.clientHeight * window.devicePixelRatio;
+        gl.viewport(0, 0, canvas.width, canvas.height);
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    function render(time) {
+        gl.clearColor(0, 0, 0, 0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.useProgram(program);
+        gl.enableVertexAttribArray(positionLocation);
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+        gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+        gl.uniform1f(timeLocation, time * 0.001);
+        gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
+        gl.uniform1i(isDarkLocation, htmlElement.classList.contains('dark') ? 1 : 0);
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+        requestAnimationFrame(render);
+    }
+    requestAnimationFrame(render);
+
+    // Micro-interaction: Update slider visual progress with smooth transition
+    document.querySelectorAll('.brass-slider').forEach(slider => {
+        slider.addEventListener('input', (e) => {
+            const value = e.target.value;
+            const progressDiv = e.target.nextElementSibling;
+            progressDiv.style.width = value + '%';
+            e.target.closest('div').previousElementSibling.querySelector('span').textContent = value + '%';
+        });
+    });
+
+    // Atmospheric effect: Subtle grain animation on vellum layers
+    const studioCard = document.querySelector('.vellum-layer');
+    if(studioCard) {
+        studioCard.addEventListener('mousemove', (e) => {
+            const { left, top, width, height } = studioCard.getBoundingClientRect();
+            const x = (e.clientX - left) / width;
+            const y = (e.clientY - top) / height;
+            const r = htmlElement.classList.contains('dark') ? 197 : 115;
+            const g = htmlElement.classList.contains('dark') ? 160 : 92;
+            const b = htmlElement.classList.contains('dark') ? 89 : 0;
+            const baseR = htmlElement.classList.contains('dark') ? 28 : 247;
+            const baseG = htmlElement.classList.contains('dark') ? 28 : 244;
+            const baseB = htmlElement.classList.contains('dark') ? 21 : 233;
+            studioCard.style.background = `radial-gradient(circle at ${x * 100}% ${y * 100}%, rgba(${r}, ${g}, ${b}, 0.05) 0%, rgba(${baseR}, ${baseG}, ${baseB}, 0.15) 60%)`;
+        });
+        studioCard.addEventListener('mouseleave', () => {
+            const baseR = htmlElement.classList.contains('dark') ? 28 : 247;
+            const baseG = htmlElement.classList.contains('dark') ? 28 : 244;
+            const baseB = htmlElement.classList.contains('dark') ? 21 : 233;
+            studioCard.style.background = `rgba(${baseR}, ${baseG}, ${baseB}, 0.15)`;
+        });
+    }
+</script>
+</body></html>

@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Stradivarius Pastoral | Private Music Study</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./src/style.css" />
+</head>
+<body class="bg-background dark:bg-[#14140e] text-on-background dark:text-[#e5e2d8] font-body-md overflow-x-hidden custom-scrollbar selection:bg-secondary/30 selection:text-secondary">
+
+  <!-- Desktop Sidebar Navigation -->
+  <nav class="hidden md:flex flex-col h-screen py-margin-mobile bg-surface-container-low/95 dark:bg-[#1c1c15]/95 backdrop-blur-md w-64 fixed left-0 top-0 border-r border-secondary/20 dark:border-[#e9c176]/20 shadow-2xl z-50 transition-colors duration-300">
+    <div class="px-8 mb-12">
+      <h1 class="font-display-lg text-primary dark:text-[#a9cfbe] italic text-3xl tracking-tight">Maestro</h1>
+      <p class="font-label-sm text-on-surface-variant dark:text-[#c1c8c3] uppercase tracking-widest text-[10px] mt-1">Violin Virtuoso</p>
+    </div>
+    <div class="flex-1 flex flex-col gap-2" id="sidebar-links">
+      <button data-target="dashboard" class="flex items-center gap-4 text-on-surface-variant dark:text-[#c1c8c3] hover:text-on-surface dark:hover:text-[#e5e2d8] hover:bg-surface-container-high/50 dark:hover:bg-[#2a2a23]/50 pl-8 py-3 transition-all text-left w-full">
+        <span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+        <span class="font-body-lg text-body-lg">Dashboard</span>
+      </button>
+      <button data-target="library" class="flex items-center gap-4 text-secondary dark:text-[#e9c176] border-l-2 border-secondary dark:border-[#e9c176] pl-8 bg-secondary-container/10 dark:bg-[#604403]/10 py-3 transition-all text-left w-full">
+        <span class="material-symbols-outlined" data-icon="library_music">library_music</span>
+        <span class="font-body-lg text-body-lg">Library</span>
+      </button>
+      <button data-target="separation" class="flex items-center gap-4 text-on-surface-variant dark:text-[#c1c8c3] hover:text-on-surface dark:hover:text-[#e5e2d8] hover:bg-surface-container-high/50 dark:hover:bg-[#2a2a23]/50 pl-8 py-3 transition-all text-left w-full">
+        <span class="material-symbols-outlined" data-icon="auto_fix_high">auto_fix_high</span>
+        <span class="font-body-lg text-body-lg">Separation</span>
+      </button>
+      <button data-target="archive" class="flex items-center gap-4 text-on-surface-variant dark:text-[#c1c8c3] hover:text-on-surface dark:hover:text-[#e5e2d8] hover:bg-surface-container-high/50 dark:hover:bg-[#2a2a23]/50 pl-8 py-3 transition-all text-left w-full">
+        <span class="material-symbols-outlined" data-icon="folder_open">folder_open</span>
+        <span class="font-body-lg text-body-lg">Archive</span>
+      </button>
+      <button data-target="conservatory" class="flex items-center gap-4 text-on-surface-variant dark:text-[#c1c8c3] hover:text-on-surface dark:hover:text-[#e5e2d8] hover:bg-surface-container-high/50 dark:hover:bg-[#2a2a23]/50 pl-8 py-3 transition-all text-left w-full">
+        <span class="material-symbols-outlined" data-icon="school">school</span>
+        <span class="font-body-lg text-body-lg">Conservatory</span>
+      </button>
+    </div>
+    <div class="px-6 mt-auto">
+      <button id="sidebar-new-transcription" class="w-full py-4 bg-secondary dark:bg-[#e9c176] text-on-secondary dark:text-[#412d00] font-label-sm rounded border border-secondary/20 shadow-lg hover:brightness-110 transition-all duration-300">
+        NEW TRANSCRIPTION
+      </button>
+      <div class="mt-8 flex flex-col gap-4 border-t border-secondary/10 dark:border-[#e9c176]/10 pt-6">
+        <button data-target="support" class="flex items-center gap-4 text-on-surface-variant dark:text-[#c1c8c3] hover:text-secondary dark:hover:text-[#e9c176] text-sm text-left">
+          <span class="material-symbols-outlined text-sm" data-icon="auto_stories">auto_stories</span> Support
+        </button>
+        <button data-target="journal" class="flex items-center gap-4 text-on-surface-variant dark:text-[#c1c8c3] hover:text-secondary dark:hover:text-[#e9c176] text-sm text-left">
+          <span class="material-symbols-outlined text-sm" data-icon="menu_book">menu_book</span> Journal
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Top AppBar -->
+  <header class="w-full top-0 sticky z-40 bg-background/80 dark:bg-[#14140e]/80 backdrop-blur-xl border-b border-secondary/30 dark:border-[#e9c176]/30 shadow-sm transition-colors duration-300">
+    <div class="flex justify-between items-center px-margin-mobile md:pl-72 md:pr-margin-desktop py-unit max-w-container-max mx-auto h-20">
+      <div class="flex items-center">
+        <span class="md:hidden mr-4 material-symbols-outlined cursor-pointer" id="mobile-menu-toggle" data-icon="menu">menu</span>
+        <h2 class="font-display-lg text-primary dark:text-[#a9cfbe] italic tracking-tight text-xl md:text-2xl cursor-pointer" id="app-logo">Stradivarius Pastoral</h2>
+      </div>
+      <div class="flex items-center gap-6">
+        <div class="hidden md:flex items-center bg-surface-container-low dark:bg-[#1c1c15] px-4 py-2 rounded border border-secondary/20 dark:border-[#e9c176]/20 gold-border-focus relative">
+          <span class="material-symbols-outlined text-secondary dark:text-[#e9c176] text-sm mr-2" data-icon="search">search</span>
+          <input id="global-search-input" class="bg-transparent border-none focus:ring-0 text-body-md text-on-surface-variant dark:text-[#c1c8c3] placeholder:text-on-surface-variant/40 w-64 outline-none" placeholder="Search the archive..." type="text"/>
+        </div>
+        <div class="flex items-center gap-4">
+          <!-- Theme Toggle -->
+          <button class="w-10 h-10 flex items-center justify-center text-secondary dark:text-[#e9c176] hover:bg-secondary/10 dark:hover:bg-[#e9c176]/10 rounded-full transition-all" id="theme-toggle">
+            <span class="material-symbols-outlined dark:hidden" data-icon="dark_mode">dark_mode</span>
+            <span class="material-symbols-outlined hidden dark:block" data-icon="light_mode">light_mode</span>
+          </button>
+          <span class="material-symbols-outlined text-secondary dark:text-[#e9c176] cursor-pointer hover:text-on-surface dark:hover:text-[#e5e2d8] transition-colors" data-icon="notifications">notifications</span>
+          <span class="material-symbols-outlined text-secondary dark:text-[#e9c176] cursor-pointer hover:text-on-surface dark:hover:text-[#e5e2d8] transition-colors" data-icon="settings">settings</span>
+          <div class="w-10 h-10 rounded-full border border-secondary/50 dark:border-[#e9c176]/50 overflow-hidden shadow-md cursor-pointer hover:scale-105 transition-transform">
+            <img class="w-full h-full object-cover" alt="Curator portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkcu8NzVGflliOg6d1si893gW1B-toobzoBP4K2p4AcqbubXkkh9Sctd-cmcMSz_rfeLb3hA33j-e_YP2YOhc0xEEOPj7AFABCfONRrmpGk9g37TRdsWpYlemxjlC-_5zH6kVTumjZxfwokWBG8wmB6QYcirCQ6oVPuv_fvTso1D6-EH4FNejH-87F-HIWodlUa8E34i7p4xwv3xCPcnNmvxbjAElZz4vXjOjW7XlxT8yigHGRSNcxo50wikklFiKAbt_Is9--rLA"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Overlay -->
+  <div id="mobile-drawer" class="fixed inset-0 bg-black/60 z-[60] hidden transition-opacity duration-300">
+    <div class="w-64 h-full bg-surface-container-low dark:bg-[#1c1c15] border-r border-secondary/20 dark:border-[#e9c176]/20 p-6 flex flex-col gap-6 shadow-2xl relative translate-x-[-100%] transition-transform duration-300" id="mobile-drawer-content">
+      <div class="flex justify-between items-center mb-6">
+        <h1 class="font-display-lg text-primary dark:text-[#a9cfbe] italic text-2xl">Maestro</h1>
+        <span class="material-symbols-outlined cursor-pointer text-secondary" id="mobile-drawer-close" data-icon="close">close</span>
+      </div>
+      <div class="flex flex-col gap-2" id="mobile-nav-links">
+        <!-- populated dynamically or matches desktop -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Area -->
+  <main class="md:pl-64 min-h-[calc(100vh-80px)] relative parchment-texture transition-colors duration-300 pb-32">
+    
+    <!-- ================= DASHBOARD VIEW ================= -->
+    <div id="view-dashboard" class="view-section hidden">
+      <!-- Hero Section -->
+      <section class="px-margin-mobile md:px-margin-desktop py-12">
+        <div class="grid md:grid-cols-12 gap-gutter items-center">
+          <div class="md:col-span-7 space-y-6">
+            <p class="font-label-sm text-secondary dark:text-[#e9c176] uppercase tracking-[0.2em]">Private Conservatory Access</p>
+            <h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface dark:text-[#e5e2d8] leading-tight">
+              Cultivating the Essence of <span class="text-primary dark:text-[#a9cfbe]">Classical Strings</span>
+            </h1>
+            <p class="font-body-lg text-body-lg text-on-surface-variant dark:text-[#c1c8c3] max-w-xl">
+              Welcome back, Maestro. Your manuscript of 'The Pastoral Sonata' is nearing completion. The isolation of our archive provides the perfect resonance for your latest transcription.
+            </p>
+            <div class="flex gap-4 pt-4">
+              <button data-action="resume-study" class="px-8 py-3 bg-secondary dark:bg-[#e9c176] text-on-secondary dark:text-[#412d00] font-label-sm rounded-lg hover:shadow-[0_0_20px_rgba(233,193,118,0.3)] transition-all">RESUME STUDY</button>
+              <button data-action="view-library" class="px-8 py-3 border border-secondary/40 dark:border-[#e9c176]/40 text-secondary dark:text-[#e9c176] font-label-sm rounded-lg hover:bg-secondary/5 dark:hover:bg-[#e9c176]/5 transition-all">VIEW LIBRARY</button>
+            </div>
+          </div>
+          <div class="md:col-span-5 relative">
+            <div class="absolute -inset-4 bg-primary-container/10 dark:bg-[#062c21]/20 blur-3xl rounded-full"></div>
+            <div class="relative w-full aspect-[4/5] rounded-xl overflow-hidden border border-secondary/30 dark:border-[#e9c176]/30 shadow-2xl">
+              <img class="w-full h-full object-cover" alt="Technical illustration of a Stradivarius" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3c9t8NMuG4-EpjXvzzThsREQp6LL_Q4-0t5g-dtwKKtSQIX6P6A1yHepfe6i-DrMQZzIrRmrGSYnwHp4TGu7MN-1-CEHCGuKdkr8-fa08RrGphpvQF2OSU4p80CyYG-bZmOFCI5O4iFb0FxqUOaRU5Q394LJBRyzokwTA95M_zDJQXSzTjnUuXUzvJmtAw57G45KWMRBFUHiLIpC-plVa8eRg6wMNt54LA1aKt5Q_rFAjMEdmBDQ3eYJHUUuuz_Ww5MRoSymgd40"/>
+              <div class="absolute inset-0 bg-gradient-to-t from-background/80 dark:from-[#14140e]/80 via-transparent to-transparent"></div>
+              <div class="absolute bottom-6 left-6 right-6">
+                <span class="font-label-sm text-secondary dark:text-[#e9c176] px-3 py-1 bg-background/80 dark:bg-[#14140e]/80 backdrop-blur rounded-full border border-secondary/20 dark:border-[#e9c176]/20">Featured Instrument</span>
+                <h3 class="font-display-lg text-2xl mt-2 dark:text-[#e5e2d8]">The 'Gould' Stradivarius</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="px-margin-mobile md:px-margin-desktop">
+        <div class="ornamental-divider"></div>
+      </div>
+
+      <!-- Bento Grid: Daily Masterpieces & Recent Transcriptions -->
+      <section class="px-margin-mobile md:px-margin-desktop py-8 grid grid-cols-1 md:grid-cols-3 gap-gutter">
+        <div class="md:col-span-2 space-y-6">
+          <div class="flex justify-between items-end">
+            <div>
+              <h2 class="font-headline-md text-headline-md text-primary dark:text-[#a9cfbe]">Daily Masterpieces</h2>
+              <p class="font-body-md text-on-surface-variant dark:text-[#c1c8c3] italic">Curated movements for your morning contemplation.</p>
+            </div>
+            <button data-action="view-library" class="font-label-sm text-secondary dark:text-[#e9c176] border-b border-secondary/30 dark:border-[#e9c176]/30 pb-1 hover:text-on-surface dark:hover:text-[#e5e2d8] transition-colors">EXPLORE ALL</button>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6" id="daily-masterpieces-container">
+            <!-- Dynamic Daily Masterpieces will be injected here -->
+          </div>
+        </div>
+        <div class="space-y-6">
+          <div class="flex justify-between items-end">
+            <h2 class="font-headline-md text-headline-md text-primary dark:text-[#a9cfbe]">Recent Separation</h2>
+            <span class="material-symbols-outlined text-on-surface-variant dark:text-[#c1c8c3] cursor-pointer" data-icon="more_horiz">more_horiz</span>
+          </div>
+          <div class="vellum-layer rounded-xl p-4 flex flex-col gap-4" id="recent-separations-container">
+            <!-- Dynamic Recents will be injected here -->
+          </div>
+          <!-- Atmospheric Detail Card -->
+          <div class="relative rounded-xl overflow-hidden aspect-video border border-secondary/30 dark:border-[#e9c176]/30">
+            <img class="w-full h-full object-cover" alt="Violin scroll and candle" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhkoI45VNsHmaRvC4uaSiboRCp9w9Dg_YP1iZyXDk-yfAx7CartpGsgGGTmiiNQcaSTp6JbmGS4iaZS6sYo1rN4TlgwcBJZ2VyPqeA4U43mg4LguvTeXVZedRu11fY6muSBuZwkTbLn0W20GpVou__8TALNhMHPJSFkwpEqiV5luH-QyvLakxjv_4I82mV0pjCMMYHajy36n9QBm8ivzWlASaq-X9ootyAksptNTsVgKpnkr8d2Ns8jVYANZzWVzU7ttoX1NzGYaw"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-primary-container/80 dark:from-[#062c21]/80 to-transparent flex items-end p-4">
+              <p class="text-xs italic text-white/80 dark:text-on-primary-container/80">"Music is the movement of sound to reach the soul for the education of its virtue." — Plato</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ================= LIBRARY VIEW ================= -->
+    <div id="view-library" class="view-section hidden">
+      <main class="px-margin-mobile md:px-margin-desktop py-12">
+        <section class="mb-12">
+          <div class="flex flex-col md:flex-row justify-between items-baseline mb-8">
+            <div>
+              <h1 class="font-display-lg text-display-lg text-on-surface dark:text-on-surface mb-2">Manuscript Library</h1>
+              <p class="font-body-lg text-on-surface-variant italic">Select a movement to begin your curation.</p>
+            </div>
+            <div class="flex flex-wrap gap-4 md:gap-6 mt-6 md:mt-0 font-label-sm text-label-sm tracking-[0.15em] uppercase" id="library-tabs">
+              <button data-tab="all" class="text-secondary border-b border-secondary pb-1 library-tab-btn">All Folios</button>
+              <button data-tab="solo" class="text-on-surface-variant hover:text-secondary transition-colors pb-1 library-tab-btn">Solo Violin</button>
+              <button data-tab="orchestra" class="text-on-surface-variant hover:text-secondary transition-colors pb-1 library-tab-btn">Full Orchestra</button>
+              <button data-tab="archived" class="text-on-surface-variant hover:text-secondary transition-colors pb-1 library-tab-btn">Archived</button>
+            </div>
+          </div>
+          
+          <!-- Library Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-gutter" id="library-manuscripts-grid">
+            <!-- Dynamic Manuscripts will be injected here -->
+          </div>
+
+          <div class="ornamental-rule">
+            <span class="f-hole-divider">f</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+            <!-- Recently Archived / Acquisitions Section -->
+            <div class="bg-surface-container-low dark:bg-[#1c1c15]/90 p-8 border border-secondary/10 dark:border-[#e9c176]/10 transition-colors duration-500 rounded-xl">
+              <h3 class="font-display-lg text-headline-md text-secondary dark:text-[#e9c176] mb-6">Archive Acquisitions</h3>
+              <div class="space-y-6" id="archive-acquisitions-container">
+                <!-- Acquisitions will be injected dynamically -->
+              </div>
+            </div>
+            <!-- Library Stats / Context Card -->
+            <div class="bg-secondary-container/5 dark:bg-[#604403]/5 p-8 border border-secondary/10 dark:border-[#e9c176]/10 flex flex-col justify-center rounded-xl">
+              <div class="flex items-center gap-4 mb-4">
+                <span class="material-symbols-outlined text-secondary dark:text-[#e9c176] text-[40px]" data-icon="menu_book">menu_book</span>
+                <h3 class="font-display-lg text-headline-md text-secondary dark:text-[#e9c176] italic">Library Insights</h3>
+              </div>
+              <p class="font-body-lg text-on-surface-variant dark:text-[#c1c8c3] mb-6">You have cataloged 1,248 manuscripts this season. Your most studied era remains the Baroque period, specifically the works of Corelli and Vivaldi.</p>
+              <div class="flex gap-4">
+                <div class="bg-primary-container/40 dark:bg-[#062c21]/40 px-4 py-2 border border-secondary/20 dark:border-[#e9c176]/20">
+                  <p class="text-label-sm font-label-sm text-secondary/60 dark:text-[#e9c176]/60">COLLECTION</p>
+                  <p class="font-display-lg text-on-surface dark:text-[#e5e2d8]" id="insight-collection-completion">94% Complete</p>
+                </div>
+                <div class="bg-primary-container/40 dark:bg-[#062c21]/40 px-4 py-2 border border-secondary/20 dark:border-[#e9c176]/20">
+                  <p class="text-label-sm font-label-sm text-secondary/60 dark:text-[#e9c176]/60">SESSIONS</p>
+                  <p class="font-display-lg text-on-surface dark:text-[#e5e2d8]" id="insight-session-hours">428 Hours</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- ================= SEPARATION STUDIO VIEW ================= -->
+    <div id="view-separation" class="view-section hidden">
+      <main class="relative min-h-[calc(100vh-80px)] py-12 flex flex-col items-center justify-center overflow-hidden">
+        <!-- Decorative Background Elements -->
+        <div class="absolute top-0 left-0 w-64 h-64 botanical-watermark rotate-12 -translate-x-1/4 -translate-y-1/4">
+          <img class="w-full h-full" alt="Botanical roses line art" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9nt72dnHSk5Z-oZBeXbYNntJTDzkOlC8jkYM34WkxT-cOyADHmTRWLKhoL4wp-KXfBomks17--YdN6fj78yr5B-G84byfJfLWxr0Z61NwfM-j1l8uy93QMo5cNCtil4nm6UXcJbllEoYFi1x-8XdtWQvbGMGLxpJv47nmOBFNlH9arVh9HjkDwieUmhILvrLXDPKw-Zpz6737VD8mK4-nTFNMyN5bwIOB1FRYvicSPiLnKpORumnhmJMSg9dsoTJA4nBxNXBVx6Y"/>
+        </div>
+        <div class="absolute bottom-0 right-0 w-80 h-80 botanical-watermark -rotate-12 translate-x-1/4 translate-y-1/4">
+          <img class="w-full h-full" alt="Vintage jasmine etching" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjcYyfBApAd6Y9udP3v2lIiSc7Fy3PiSUdjOw1R9fGnhu1p3UtvVrtLUQdYazU-p0fpm6Ee2SaTPwLHqKuqaoEyqzYwScTAijpJA8VgwbV70S-az4oRjKGts4xR9mKwu84cSEVhROCgiopKbYDElbI1UULyQ4j_zvpyzuJtejBon6X2w0ccGIhUAfGYRWIF2_qKLSioc5pahNXEpInMMfvuHu9JKxvPQM7E5x84gM3UUOR0pFOe3kW_vJ_KN2Tmb1CUrpYyEkbxP0"/>
+        </div>
+
+        <!-- Central Studio Workspace -->
+        <div class="w-full max-w-4xl relative z-10 px-4">
+          <div class="vellum-layer p-8 md:p-12 flex flex-col gap-12 shadow-2xl rounded-2xl">
+            <!-- Header Section -->
+            <div class="text-center space-y-2">
+              <h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-secondary dark:text-[#e9c176] interactive-glow">The Separation Studio</h1>
+              <p class="font-body-lg text-on-surface-variant dark:text-[#c1c8c3] max-w-xl mx-auto italic">Isolate the voice of the violin from the orchestral ensemble with precision and grace.</p>
+              <div class="flex justify-center py-4">
+                <div class="h-[1px] w-32 bg-secondary/30 dark:bg-[#e9c176]/30 relative">
+                  <span class="absolute left-1/2 -top-2 -translate-x-1/2 text-secondary dark:text-[#e9c176] text-xs material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">eco</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Hugging Face Space URL input (For customization/self-hosting) -->
+            <div class="max-w-md mx-auto w-full flex flex-col gap-2 -mt-4 bg-surface-container-low dark:bg-[#1c1c15] p-4 border border-secondary/20 dark:border-[#e9c176]/20 rounded-lg">
+              <label for="hf-api-url" class="text-xs uppercase tracking-widest text-secondary dark:text-[#e9c176] font-semibold">Hugging Face Space API Endpoint</label>
+              <div class="flex gap-2">
+                <input type="text" id="hf-api-url" class="flex-1 bg-transparent border-b border-secondary/30 text-xs text-on-surface dark:text-[#e5e2d8] py-1 outline-none focus:border-secondary placeholder:opacity-40" placeholder="e.g. author-spacename.hf.space" />
+                <button id="save-hf-url" class="px-3 py-1 bg-secondary/10 text-secondary dark:text-[#e9c176] border border-secondary/30 text-[10px] uppercase font-semibold hover:bg-secondary/20 transition-all rounded">Save</button>
+              </div>
+              <p class="text-[10px] text-on-surface-variant/70">Mặc định ứng dụng sẽ gọi tới Space dùng chung. Bạn cũng tự thiết lập Space riêng của mình.</p>
+            </div>
+
+            <!-- Upload / Waveform Section with WebGL Shader -->
+            <div id="audio-dropzone" class="relative w-full aspect-[21/9] bg-surface-container-lowest/50 dark:bg-black/30 rounded-xl border border-secondary/30 dark:border-[#e9c176]/30 flex items-center justify-center overflow-hidden group cursor-pointer transition-all gold-glow">
+              <!-- WebGL Background -->
+              <canvas id="shader-canvas"></canvas>
+              <!-- Placeholder Waveform styled like Score -->
+              <div class="absolute inset-0 flex flex-col justify-center gap-3 opacity-20 dark:opacity-30 waveform-score pointer-events-none">
+                <div class="h-px w-full bg-on-surface-variant/30 dark:bg-on-surface-variant-dark/30"></div>
+                <div class="h-px w-full bg-on-surface-variant/30 dark:bg-on-surface-variant-dark/30"></div>
+                <div class="h-px w-full bg-on-surface-variant/30 dark:bg-on-surface-variant-dark/30"></div>
+                <div class="h-px w-full bg-on-surface-variant/30 dark:bg-on-surface-variant-dark/30"></div>
+                <div class="h-px w-full bg-on-surface-variant/30 dark:bg-on-surface-variant-dark/30"></div>
+              </div>
+              <div class="flex flex-col items-center gap-4 text-on-surface-variant dark:text-[#c1c8c3] group-hover:text-secondary dark:group-hover:text-[#e9c176] transition-all duration-500 transform group-hover:scale-105 pointer-events-none" id="dropzone-text-container">
+                <span class="material-symbols-outlined text-5xl transition-all" data-icon="cloud_upload">cloud_upload</span>
+                <div class="text-center">
+                  <p class="font-label-sm uppercase tracking-[0.2em]" id="upload-status-text">Select Audio Manuscript</p>
+                  <p class="text-xs opacity-60">WAV, FLAC, or MP3 up to 50MB</p>
+                </div>
+              </div>
+              <!-- Hidden input -->
+              <input type="file" id="audio-file-input" class="hidden" accept="audio/*" />
+            </div>
+
+            <!-- Separation Progress Overlay (Inside Studio Card) -->
+            <div id="separation-loading-container" class="hidden flex-col items-center justify-center p-6 border border-secondary/20 rounded-xl bg-surface-container-low dark:bg-[#1c1c15]">
+              <div class="relative w-16 h-16 mb-4">
+                <div class="absolute inset-0 rounded-full border-2 border-secondary/20 dark:border-[#e9c176]/20"></div>
+                <div class="absolute inset-0 rounded-full border-2 border-t-secondary dark:border-t-[#e9c176] animate-spin"></div>
+              </div>
+              <h3 class="font-display-lg text-lg text-secondary dark:text-[#e9c176]" id="separation-progress-title">Separating Music...</h3>
+              <p class="text-xs text-on-surface-variant/80 mt-1 max-w-sm text-center" id="separation-progress-desc">Mô hình AI Demucs trên Hugging Face đang phân tách bản nhạc. Quá trình này có thể tốn khoảng 1 - 2 phút...</p>
+              <div class="w-full max-w-xs h-1.5 bg-secondary/10 dark:bg-[#e9c176]/10 rounded-full mt-4 overflow-hidden relative">
+                <div id="separation-progress-bar" class="absolute left-0 top-0 h-full bg-secondary dark:bg-[#e9c176] w-0 transition-all duration-300"></div>
+              </div>
+            </div>
+
+            <!-- Control Panel (Adjust Violin & Background Stems) -->
+            <div class="grid md:grid-cols-2 gap-12 px-4 md:px-8">
+              <!-- Left Control: Violin Intensity -->
+              <div class="space-y-6 group">
+                <div class="flex justify-between items-center transition-colors group-hover:text-secondary dark:group-hover:text-[#e9c176]">
+                  <label class="font-label-sm uppercase tracking-widest text-on-surface dark:text-[#e5e2d8] font-semibold">Violin Volume</label>
+                  <span class="font-label-sm text-secondary dark:text-[#e9c176]" id="violin-vol-label">100%</span>
+                </div>
+                <div class="relative pt-2">
+                  <input id="violin-vol-slider" class="w-full h-1 bg-surface-container-highest dark:bg-[#35352e] rounded-full appearance-none brass-slider cursor-pointer" max="100" min="0" type="range" value="100"/>
+                  <div id="violin-vol-fill" class="absolute left-0 top-[10px] h-1 bg-secondary dark:bg-[#e9c176] rounded-full pointer-events-none transition-all duration-100" style="width: 100%"></div>
+                </div>
+                <p class="text-xs italic text-on-surface-variant dark:text-[#c1c8c3]">Enhances the presence and bow-texture of the lead violin track.</p>
+              </div>
+              <!-- Right Control: Orchestral Background -->
+              <div class="space-y-6 group">
+                <div class="flex justify-between items-center transition-colors group-hover:text-secondary dark:group-hover:text-[#e9c176]">
+                  <label class="font-label-sm uppercase tracking-widest text-on-surface dark:text-[#e5e2d8] font-semibold">Orchestral Background</label>
+                  <span class="font-label-sm text-secondary dark:text-[#e9c176]" id="bg-vol-label">100%</span>
+                </div>
+                <div class="relative pt-2">
+                  <input id="bg-vol-slider" class="w-full h-1 bg-surface-container-highest dark:bg-[#35352e] rounded-full appearance-none brass-slider cursor-pointer" max="100" min="0" type="range" value="100"/>
+                  <div id="bg-vol-fill" class="absolute left-0 top-[10px] h-1 bg-secondary dark:bg-[#e9c176] rounded-full pointer-events-none transition-all duration-100" style="width: 100%"></div>
+                </div>
+                <p class="text-xs italic text-on-surface-variant dark:text-[#c1c8c3]">Adjust the volume of the accompanying strings and woodwinds.</p>
+              </div>
+            </div>
+
+            <!-- Action Button -->
+            <div class="flex justify-center pt-8">
+              <button id="refine-sound-btn" class="bg-gradient-to-b from-secondary to-[#c5a059] dark:from-[#e9c176] dark:to-[#c5a059] text-on-secondary dark:text-[#412d00] font-label-sm uppercase tracking-[0.3em] px-12 py-4 rounded-full border border-secondary dark:border-[#e9c176]/30 transition-all gold-glow active:scale-95 flex items-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed">
+                <span class="material-symbols-outlined text-lg" data-icon="auto_fix_high">auto_fix_high</span>
+                Refine Sound
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- ================= CONSERVATORY / OTHER VIEWS ================= -->
+    <div id="view-conservatory" class="view-section hidden px-margin-mobile md:px-margin-desktop py-12">
+      <div class="max-w-3xl mx-auto vellum-layer p-8 md:p-12 border border-secondary/20 rounded-xl space-y-8">
+        <div class="text-center">
+          <h1 class="font-display-lg text-3xl text-secondary dark:text-[#e9c176] italic">Maestro's Conservatory</h1>
+          <p class="text-xs uppercase tracking-widest text-on-surface-variant/80 mt-2">Study & master classical compositions</p>
+          <div class="ornamental-divider"></div>
+        </div>
+        <div class="space-y-6">
+          <div class="border-l-4 border-secondary pl-4">
+            <h3 class="font-display-lg text-xl dark:text-[#e5e2d8]">Technique: Spiccato bowing</h3>
+            <p class="text-sm text-on-surface-variant mt-2">The bow bounces lightly upon the string. Master this by practicing slow open strings, focusing on the natural spring of the stick.</p>
+          </div>
+          <div class="border-l-4 border-secondary pl-4">
+            <h3 class="font-display-lg text-xl dark:text-[#e5e2d8]">Vibrato Exercises</h3>
+            <p class="text-sm text-on-surface-variant mt-2">Maintain a relaxed wrist. Practice slow oscillations of the finger joint before speeding up to reach a warm, singing tone.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="view-archive" class="view-section hidden px-margin-mobile md:px-margin-desktop py-12 text-center">
+      <div class="max-w-lg mx-auto vellum-layer p-12 border border-secondary/20 rounded-xl">
+        <span class="material-symbols-outlined text-[64px] text-secondary" data-icon="inventory_2">inventory_2</span>
+        <h1 class="font-display-lg text-2xl text-secondary mt-4">Historic Archive</h1>
+        <p class="font-body-lg text-on-surface-variant/80 mt-2 italic">Lưu trữ toàn bộ các tệp tin âm thanh đã tách tiếng thành công. Chức năng lưu trữ đám mây đang được phát triển...</p>
+      </div>
+    </div>
+
+    <div id="view-support" class="view-section hidden px-margin-mobile md:px-margin-desktop py-12 text-center">
+      <div class="max-w-lg mx-auto vellum-layer p-12 border border-secondary/20 rounded-xl">
+        <span class="material-symbols-outlined text-[64px] text-secondary" data-icon="help_center">help_center</span>
+        <h1 class="font-display-lg text-2xl text-secondary mt-4">Maestro Support</h1>
+        <p class="font-body-lg text-on-surface-variant/80 mt-2 italic">Gửi thư về phòng lưu trữ: support@stradivarius.pastoral. Hỗ trợ 24/7 đối với mọi thắc mắc về ký âm và tách nhạc.</p>
+      </div>
+    </div>
+
+    <div id="view-journal" class="view-section hidden px-margin-mobile md:px-margin-desktop py-12 text-center">
+      <div class="max-w-lg mx-auto vellum-layer p-12 border border-secondary/20 rounded-xl">
+        <span class="material-symbols-outlined text-[64px] text-secondary" data-icon="book">book</span>
+        <h1 class="font-display-lg text-2xl text-secondary mt-4">Curator's Journal</h1>
+        <p class="font-body-lg text-on-surface-variant/80 mt-2 italic">Ghi chép hàng ngày về kỹ năng vĩ cầm, nhạc lý cổ điển và quá trình sưu tầm vĩ cầm Stradivarius.</p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ================= GRAND FULLSCREEN PLAYER ================= -->
+  <div id="grand-player-panel" class="fixed inset-x-0 bottom-0 top-20 bg-background dark:bg-[#14140e] z-50 transform translate-y-[100%] transition-transform duration-500 ease-in-out border-t border-secondary/30 dark:border-[#e9c176]/30 overflow-y-auto custom-scrollbar flex flex-col">
+    <!-- Header inside Player -->
+    <header class="w-full sticky top-0 bg-background/95 dark:bg-[#14140e]/95 backdrop-blur border-b border-secondary/20 z-[60]">
+      <div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 max-w-container-max mx-auto">
+        <div class="flex items-center gap-4">
+          <span class="material-symbols-outlined text-secondary cursor-pointer" id="grand-player-close" data-icon="close">close</span>
+          <h1 class="font-display-lg text-primary dark:text-[#a9cfbe] italic text-lg md:text-xl">Stradivarius Pastoral</h1>
+        </div>
+        <div class="hidden md:flex items-center gap-8 font-label-sm text-xs tracking-widest">
+          <span class="text-secondary font-bold">NOW PLAYING</span>
+          <span class="text-on-surface-variant/70 hover:text-secondary cursor-pointer" id="goto-library-from-player">SCORE LIBRARY</span>
+        </div>
+        <div class="flex items-center gap-4">
+          <button class="p-2 rounded-full hover:bg-secondary/10" id="grand-theme-toggle">
+            <span class="material-symbols-outlined text-on-surface-variant dark:text-[#c1c8c3]" data-icon="dark_mode">dark_mode</span>
+          </button>
+          <span class="material-symbols-outlined text-on-surface-variant dark:text-[#c1c8c3]" data-icon="settings">settings</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Player Canvas -->
+    <main class="flex-1 max-w-container-max mx-auto w-full px-margin-mobile md:px-margin-desktop py-8 grid grid-cols-1 lg:grid-cols-12 gap-gutter z-10">
+      
+      <!-- Left: Visual Album Art / Violin Portrait -->
+      <div class="lg:col-span-7 flex flex-col items-center">
+        <div class="relative w-full aspect-square md:aspect-[4/5] rounded-xl overflow-hidden shadow-2xl border border-secondary/30 dark:border-[#e9c176]/30 group">
+          <div class="absolute inset-0 bg-gradient-to-t from-background dark:from-[#14140e] via-transparent to-transparent z-10 opacity-60"></div>
+          <img id="player-art" alt="Stradivarius Violin" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUA_85HSXZNORKgszJPLPxISE9xc13QP5sNeMCxaG0T1Irow-K3ApeWsihWuJooKXcWg6dyYENgiOjr1vdt2BAM6UO8uJkV0LKoBPbOGdW1HDoblrItCYOdC3hYv4mtsJtHgd8-7-MAgz2a2kK_Hv5W2Mf-a5_1UM83LqgidJHSWZ1cCoMPlzx2ZXm9mt7N6FMqLtujM7BcrqI2xEYk1dEmzy2HdszWKwTKyQpMvAq3WtVCzgkKZqTbrtn2gLJTPqN1b9Qm5oNbB0"/>
+          
+          <!-- Title & Artist Overlay -->
+          <div class="absolute bottom-8 left-8 right-8 z-20">
+            <span class="font-label-sm text-xs text-secondary uppercase tracking-[0.2em] mb-2 block" id="player-opus">Opus 104</span>
+            <h2 class="font-display-lg text-3xl md:text-4xl text-on-surface dark:text-[#e5e2d8] leading-none mb-2" id="player-title">Sonata No. 1 in G Minor</h2>
+            <div class="flex items-center gap-2 text-on-surface-variant dark:text-[#c1c8c3] font-body-md text-sm italic">
+              <span class="material-symbols-outlined text-[16px]" data-icon="history_edu">history_edu</span>
+              <span id="player-author">J.S. Bach • Transcription by Maestro</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Desktop Playback Controls -->
+        <div class="mt-8 hidden md:flex items-center gap-8 lg:gap-12">
+          <button id="player-btn-shuffle" class="text-secondary hover:scale-110 transition-transform">
+            <span class="material-symbols-outlined text-2xl" data-icon="shuffle">shuffle</span>
+          </button>
+          <button id="player-btn-prev" class="text-secondary hover:scale-110 transition-transform">
+            <span class="material-symbols-outlined text-4xl" data-icon="skip_previous">skip_previous</span>
+          </button>
+          <button id="player-btn-play" class="w-20 h-20 bg-gradient-to-b from-secondary to-secondary-container dark:from-[#e9c176] dark:to-[#604403] rounded-full flex items-center justify-center text-on-secondary dark:text-[#412d00] shadow-lg hover:shadow-secondary/40 transition-all duration-500 active:scale-95 active-ring">
+            <span class="material-symbols-outlined text-4xl" id="player-play-icon" data-icon="play_arrow">play_arrow</span>
+          </button>
+          <button id="player-btn-next" class="text-secondary hover:scale-110 transition-transform">
+            <span class="material-symbols-outlined text-4xl" data-icon="skip_next">skip_next</span>
+          </button>
+          <button id="player-btn-repeat" class="text-secondary hover:scale-110 transition-transform">
+            <span class="material-symbols-outlined text-2xl" data-icon="repeat">repeat</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Right: Dynamic Score & Commentary -->
+      <div class="lg:col-span-5 flex flex-col space-y-gutter">
+        <!-- Score Area -->
+        <div class="bg-surface-container-low dark:bg-[#1c1c15] p-6 md:p-8 rounded-xl border border-secondary/20 dark:border-[#e9c176]/20 shadow-xl flex-grow flex flex-col justify-between min-h-[400px]">
+          <div class="flex justify-between items-center mb-6">
+            <h3 class="font-label-sm text-xs text-secondary dark:text-[#e9c176] uppercase tracking-widest font-semibold">Manuscript View</h3>
+            <div class="flex gap-4 text-secondary">
+              <span class="material-symbols-outlined cursor-pointer" data-icon="zoom_in">zoom_in</span>
+              <span class="material-symbols-outlined cursor-pointer text-on-surface-variant" data-icon="more_vert">more_vert</span>
+            </div>
+          </div>
+
+          <!-- Sheet Music Area -->
+          <div class="flex-grow flex flex-col justify-center space-y-6 overflow-hidden">
+            <div class="relative py-4 border-y border-secondary/10 dark:border-[#e9c176]/10">
+              <img id="manuscript-score-img" alt="Musical manuscript" class="w-full opacity-60 grayscale brightness-125 dark:brightness-100 object-contain max-h-48" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0nd65qC5PUaJQgHtBoW__zFOR6t34TYbbJaq9-1ks0_tGfJ5lfFSZ8tbi4phGn34Em5pQlqoJ7dye8PWnO47tkMD_onpyq0B2y2fpDR4En1vBsqyWQhFaQiPYAPeiZ6XnA0jDs8_SiDENP1Dm_DtYk3jKPOQnOg_H_Z5_pkBsoQn4cmtLmnNbRafJAilgvs2uujVXwywnkChgp9H68Fy-eOXsjKNamRCnnabmuxRSuBopXbaR42eCoqiVV7c47uN2GEaHzWIIEIQ"/>
+              <!-- Score Scrubber Indicator -->
+              <div id="manuscript-score-scrubber" class="absolute top-0 bottom-0 left-[33%] w-[2px] bg-secondary dark:bg-[#e9c176] shadow-[0_0_8px_rgba(233,193,118,0.8)] z-10 transition-all duration-300">
+                <div class="absolute -top-1 left-1/2 -translate-x-1/2 w-3 h-3 bg-secondary dark:bg-[#e9c176] rounded-full border-2 border-background dark:border-[#14140e]"></div>
+              </div>
+            </div>
+            
+            <div class="space-y-4 font-body-lg text-lg text-on-surface dark:text-[#e5e2d8] italic text-center px-4">
+              <p id="player-quote">"The bow should dance across the strings like a feather caught in an autumn draft..."</p>
+              <div class="f-hole-divider !my-4"></div>
+              <p class="text-on-surface-variant dark:text-[#c1c8c3] text-sm font-body-md" id="player-movement">Variation III: Adagio Sostenuto</p>
+            </div>
+          </div>
+
+          <!-- Bottom Seek Bar inside Panel -->
+          <div class="mt-8 space-y-2">
+            <div id="player-progress-container" class="relative h-[4px] bg-secondary/20 dark:bg-[#e9c176]/10 w-full rounded-full cursor-pointer group">
+              <div id="player-progress-bar" class="absolute left-0 top-0 h-full bg-secondary dark:bg-[#e9c176] w-1/3 shadow-[0_0_10px_#e9c176]"></div>
+              <div id="player-scrubber-handle" class="absolute left-1/3 top-1/2 -translate-y-1/2 -translate-x-1/2 w-3 h-3 bg-secondary dark:bg-[#e9c176] rotate-45 border border-white dark:border-[#14140e] opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            </div>
+            <div class="flex justify-between font-label-sm text-xs text-on-surface-variant/70 dark:text-[#c1c8c3]/70">
+              <span id="player-time-current">01:42</span>
+              <span id="player-time-total">04:15</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Up Next Item -->
+        <div id="up-next-container" class="bg-surface-container-low/40 dark:bg-[#1c1c15]/40 backdrop-blur-sm p-6 rounded-xl border border-secondary/10 dark:border-[#e9c176]/10 hover:border-secondary/30 dark:hover:border-[#e9c176]/30 transition-all cursor-pointer group">
+          <div class="flex items-center gap-4">
+            <div class="w-16 h-16 rounded-lg overflow-hidden border border-secondary/20">
+              <img id="up-next-art" alt="Up Next Album" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJ1YzW_gVemOCmG8ze2r6T7PjkivDlF96IPQhUvM0vJx-dWFncwlVODkqhgdKgf0NDtEMWwOvHyjCeqTe6NJrORuxqU6tvVagY-Q2-X2XJR64_srlU46kBEGY5-sfyV9aMYpdvbe3M3aL4pFzLh1J3MVSCkPlYOkVryaeTK1kKdxnpFJGAKN0RJ5LI-PRX6v389bnQ5pGPVHnASy3s-rDNhvYY8oI-odHRoEybD9Sv0Z-GKZmQFJ3wu3fcJebxP0I-v7xkMftUKsc"/>
+            </div>
+            <div class="flex-grow">
+              <p class="font-label-sm text-xs text-secondary uppercase mb-1 font-semibold">Up Next</p>
+              <h4 class="font-headline-md text-base text-on-surface dark:text-[#e5e2d8]" id="up-next-title">The Cello Suites, BWV 1007</h4>
+              <p class="font-body-md text-xs text-on-surface-variant dark:text-[#c1c8c3]" id="up-next-desc">J.S. Bach — Conservatory Recording</p>
+            </div>
+            <span class="material-symbols-outlined text-secondary opacity-0 group-hover:opacity-100 transition-opacity" data-icon="play_circle">play_circle</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ================= BOTTOM MINI-PLAYER SHELL ================= -->
+  <footer id="mini-player" class="fixed bottom-0 w-full h-24 z-40 bg-surface-container-highest/90 dark:bg-[#35352e]/90 backdrop-blur-2xl border-t border-secondary/40 dark:border-[#e9c176]/40 shadow-2xl flex items-center justify-between px-margin-mobile md:px-margin-desktop transition-colors duration-300">
+    <!-- Click area to slide up the Grand Player -->
+    <div class="flex items-center gap-4 md:w-1/3 cursor-pointer hover:opacity-80 transition-opacity" id="mini-track-info-click">
+      <div class="w-12 h-12 bg-surface-container-low dark:bg-[#1c1c15] border border-secondary/30 dark:border-[#e9c176]/30 rounded overflow-hidden hidden sm:block">
+        <img id="mini-player-art" class="w-full h-full object-cover" alt="Player thumbnail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuADdDtqSpZM9s54t7AKu_x66NugVh3MRygJCM2FAe3Mb2vk9WS_Ze7eAOJmJllDmADB6JwGpTHoIZrcFCf-AhW7PSj4nMCFG2IE1ByCxJjEKuMztU9odY0cTMRo-AJm48uQYJr0M9CWv8Oti-decyI_7Qp79OfMTwO3z99yzoBgG3xRPCe2fZ29Lba83xKVp4HFAm-7fA3sEGS0wW5EHKj44IwwetA5zaitlp5SF3Ejq-imUDx92mFPbbRKD9eQE8HcjDgWy2tWUgw"/>
+      </div>
+      <div class="overflow-hidden">
+        <h6 id="mini-player-title" class="font-body-md text-on-surface dark:text-[#e5e2d8] leading-tight truncate max-w-[150px]">Sonata No. 1</h6>
+        <p id="mini-player-subtitle" class="text-[10px] text-on-surface-variant dark:text-[#c1c8c3] font-label-sm">Violin Solo • 00:00 / 00:00</p>
+      </div>
+    </div>
+
+    <!-- Central Playback Controls -->
+    <div class="flex flex-col items-center justify-center flex-1">
+      <div class="flex items-center gap-6 text-secondary dark:text-[#e9c176]">
+        <span class="material-symbols-outlined cursor-pointer hover:scale-110 transition-transform" id="mini-btn-prev" data-icon="skip_previous">skip_previous</span>
+        <span class="material-symbols-outlined text-4xl cursor-pointer hover:scale-110 transition-transform" id="mini-btn-play" data-icon="play_circle" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+        <span class="material-symbols-outlined cursor-pointer hover:scale-110 transition-transform" id="mini-btn-next" data-icon="skip_next">skip_next</span>
+      </div>
+      <div id="mini-progress-container" class="w-full max-w-md h-1 bg-secondary/10 dark:bg-[#e9c176]/10 rounded-full mt-2 relative overflow-hidden group cursor-pointer">
+        <div id="mini-progress-bar" class="absolute left-0 top-0 h-full bg-secondary dark:bg-[#e9c176] w-0"></div>
+      </div>
+    </div>
+
+    <!-- Volume & Queue (Desktop Only) -->
+    <div class="hidden md:flex items-center justify-end gap-4 w-1/3">
+      <span class="material-symbols-outlined text-secondary/60 dark:text-[#e9c176]/60 cursor-pointer hover:text-secondary dark:hover:text-[#e9c176]" id="mini-btn-volume" data-icon="volume_up">volume_up</span>
+      <div id="mini-volume-container" class="w-24 h-1 bg-secondary/10 dark:bg-[#e9c176]/10 rounded-full cursor-pointer relative">
+        <div id="mini-volume-bar" class="h-full bg-secondary dark:bg-[#e9c176] w-3/4"></div>
+      </div>
+      <span class="material-symbols-outlined text-secondary/60 dark:text-[#e9c176]/60 cursor-pointer hover:text-secondary dark:hover:text-[#e9c176] ml-4" data-icon="queue_music">queue_music</span>
+    </div>
+  </footer>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>

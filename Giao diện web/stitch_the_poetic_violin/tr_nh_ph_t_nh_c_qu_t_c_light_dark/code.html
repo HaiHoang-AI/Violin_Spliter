@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Stradivarius Pastoral - Grand Player</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&amp;family=EB+Garamond:ital,wght@0,400;0,500;1,400&amp;family=Libre+Caslon+Text:wght@400;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Parchment Grain Effect */
+        .parchment-overlay::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            pointer-events: none;
+            background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+        }
+
+        /* Custom Scrollbar for Scholarly Feel */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #062c21;
+        }
+        .dark ::webkit-scrollbar-track {
+            background: #062c21;
+        }
+        .light ::webkit-scrollbar-track {
+            background: #f1eee3;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c5a059;
+            border-radius: 10px;
+        }
+
+        .gold-glow:hover {
+            text-shadow: 0 0 15px rgba(233, 193, 118, 0.6);
+            transition: all 0.3s ease;
+        }
+
+        .f-hole-divider {
+            position: relative;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #e9c17644, transparent);
+            margin: 2rem 0;
+        }
+        .f-hole-divider::after {
+            content: "❦";
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            padding: 0 1rem;
+            color: #e9c176;
+            font-size: 1.2rem;
+        }
+        .dark .f-hole-divider::after {
+            background: #14140e;
+        }
+        .light .f-hole-divider::after {
+            background: #fdf9ee;
+        }
+
+        @keyframes pulse-gold {
+            0% { box-shadow: 0 0 0 0 rgba(233, 193, 118, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(233, 193, 118, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(233, 193, 118, 0); }
+        }
+        .active-ring {
+            animation: pulse-gold 2s infinite;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-highest": {
+                        DEFAULT: "#e5e2d8",
+                        dark: "#35352e"
+                      },
+                      "on-secondary": "#412d00",
+                      "primary-container": "#062c21",
+                      "background": {
+                        DEFAULT: "#fdf9ee",
+                        dark: "#14140e"
+                      },
+                      "primary-fixed": "#c4ebda",
+                      "primary": {
+                        DEFAULT: "#00150e",
+                        dark: "#a9cfbe"
+                      },
+                      "on-secondary-fixed": "#261900",
+                      "on-primary-fixed-variant": "#2a4d41",
+                      "surface-container": {
+                        DEFAULT: "#f1eee3",
+                        dark: "#202019"
+                      },
+                      "error-container": "#93000a",
+                      "on-tertiary-container": "#db6b6c",
+                      "surface-variant": "#35352e",
+                      "surface-container-high": "#2a2a23",
+                      "on-error-container": "#ffdad6",
+                      "on-primary-container": "#719586",
+                      "secondary": "#e9c176",
+                      "on-background": {
+                        DEFAULT: "#14140e",
+                        dark: "#e5e2d8"
+                      },
+                      "inverse-primary": "#426558",
+                      "on-surface": {
+                        DEFAULT: "#14140e",
+                        dark: "#e5e2d8"
+                      },
+                      "on-primary": "#13362b",
+                      "on-surface-variant": {
+                        DEFAULT: "#414845",
+                        dark: "#c1c8c3"
+                      },
+                      "surface-bright": "#3a3932",
+                      "on-primary-fixed": "#002117",
+                      "surface-dim": "#14140e",
+                      "inverse-on-surface": "#31312a",
+                      "primary-fixed-dim": "#a9cfbe",
+                      "outline": "#8b928e",
+                      "surface": {
+                        DEFAULT: "#fdf9ee",
+                        dark: "#14140e"
+                      },
+                      "on-secondary-fixed-variant": "#5d4201",
+                      "surface-container-low": {
+                        DEFAULT: "#f7f4e9",
+                        dark: "#1c1c15"
+                      },
+                      "on-secondary-container": "#dab36a",
+                      "secondary-fixed-dim": "#e9c176",
+                      "secondary-fixed": "#ffdea5",
+                      "tertiary-fixed-dim": "#ffb3b2",
+                      "error": "#ffb4ab",
+                      "tertiary-container": "#53030e",
+                      "outline-variant": "#414845",
+                      "inverse-surface": "#e5e2d8",
+                      "secondary-container": "#604403",
+                      "on-tertiary-fixed": "#410008",
+                      "on-tertiary-fixed-variant": "#81262c",
+                      "surface-container-lowest": "#0e0f09",
+                      "on-error": "#690005",
+                      "on-tertiary": "#620e18",
+                      "tertiary-fixed": "#ffdad9",
+                      "surface-tint": "#a9cfbe",
+                      "tertiary": "#ffb3b2"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "unit": "8px",
+                      "margin-mobile": "20px",
+                      "gutter": "24px",
+                      "container-max": "1200px",
+                      "margin-desktop": "64px"
+              },
+              "fontFamily": {
+                      "display-lg": ["Playfair Display"],
+                      "display-lg-mobile": ["Playfair Display"],
+                      "headline-md": ["Playfair Display"],
+                      "body-lg": ["EB Garamond"],
+                      "body-md": ["EB Garamond"],
+                      "label-sm": ["Libre Caslon Text"]
+              },
+              "fontSize": {
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "display-lg-mobile": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-on-background-light dark:text-on-background-dark parchment-overlay min-h-screen overflow-x-hidden selection:bg-secondary/30 transition-colors duration-500">
+<!-- Top AppBar -->
+<header class="w-full top-0 sticky bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-xl border-b border-secondary/30 shadow-sm z-[60] transition-colors duration-500">
+<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-unit max-w-container-max mx-auto">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary cursor-pointer" data-icon="close">close</span>
+<h1 class="font-display-lg text-primary-light dark:text-primary-dark italic tracking-tight text-display-lg-mobile md:text-headline-md">Stradivarius Pastoral</h1>
+</div>
+<div class="hidden md:flex items-center gap-gutter">
+<nav class="flex gap-8">
+<a class="text-secondary font-bold font-label-sm text-label-sm tracking-widest hover:text-secondary transition-colors duration-300" href="#">NOW PLAYING</a>
+<a class="text-on-surface-variant-light dark:text-on-surface-variant-dark font-label-sm text-label-sm tracking-widest hover:text-secondary transition-colors duration-300" href="#">SCORE LIBRARY</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-secondary/10 transition-colors group" id="theme-toggle">
+<span class="material-symbols-outlined text-on-surface-variant-light dark:text-on-surface-variant-dark group-hover:text-secondary block dark:hidden" data-icon="dark_mode">dark_mode</span>
+<span class="material-symbols-outlined text-on-surface-variant-light dark:text-on-surface-variant-dark group-hover:text-secondary hidden dark:block" data-icon="light_mode">light_mode</span>
+</button>
+<span class="material-symbols-outlined text-on-surface-variant-light dark:text-on-surface-variant-dark cursor-pointer hover:text-secondary" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant-light dark:text-on-surface-variant-dark cursor-pointer hover:text-secondary" data-icon="settings">settings</span>
+<div class="w-10 h-10 rounded-full border border-secondary/50 overflow-hidden cursor-pointer active:opacity-70">
+<img alt="Curator portrait" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKbKj8sipHqpPSh0ILvZDko3ynSa0wxLohzFW-vPyxQw-6xXAZHNzjA3hw9OHIknyoCoruNpVWV3ZRoUiyLvh5dJrNolykq3F-jJ2K7g0t2jB64Cj0M7jWbUBcYkZtMdRf9w42oLYUmvMkESv8QRAdne4KYYMftZnxaDNR3vroGuXAi_yrhb8rAnACzsadcJTfTab6UZbvjLiMaLJgPSz5PdQBrWBaiOXkdlDcfKeHRVv3H6x9vSE_fTff8FzTH_063aN9u8jrjRU"/>
+</div>
+</div>
+</div>
+</header>
+<main class="relative flex flex-col items-center pt-8 pb-32 min-h-[calc(100vh-64px)] max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+<!-- Background Atmospheric Element -->
+<div class="absolute inset-0 z-0 pointer-events-none opacity-20 overflow-hidden">
+<div class="absolute -top-24 -left-24 w-96 h-96 bg-primary-container/20 dark:bg-primary-container rounded-full blur-[120px]"></div>
+<div class="absolute bottom-24 -right-24 w-80 h-80 bg-secondary-container/20 rounded-full blur-[100px]"></div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter w-full relative z-10">
+<!-- Left: Visual Center -->
+<div class="lg:col-span-7 flex flex-col items-center">
+<div class="relative w-full aspect-square md:aspect-[4/5] rounded-xl overflow-hidden shadow-2xl shadow-primary-container/20 dark:shadow-primary-container group">
+<div class="absolute inset-0 bg-gradient-to-t from-background-light dark:from-background-dark via-transparent to-transparent z-10 opacity-60 transition-colors duration-500"></div>
+<img alt="Stradivarius Violin" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUA_85HSXZNORKgszJPLPxISE9xc13QP5sNeMCxaG0T1Irow-K3ApeWsihWuJooKXcWg6dyYENgiOjr1vdt2BAM6UO8uJkV0LKoBPbOGdW1HDoblrItCYOdC3hYv4mtsJtHgd8-7-MAgz2a2kK_Hv5W2Mf-a5_1UM83LqgidJHSWZ1cCoMPlzx2ZXm9mt7N6FMqLtujM7BcrqI2xEYk1dEmzy2HdszWKwTKyQpMvAq3WtVCzgkKZqTbrtn2gLJTPqN1b9Qm5oNbB0"/>
+<!-- Title & Artist Overlay -->
+<div class="absolute bottom-8 left-8 right-8 z-20">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-[0.2em] mb-2 block">Caprice No. 24</span>
+<h2 class="font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface-light dark:text-on-surface-dark leading-none mb-2">Niccolò Paganini</h2>
+<div class="flex items-center gap-2 text-on-surface-variant-light dark:text-on-surface-variant-dark font-body-md text-body-md italic">
+<span class="material-symbols-outlined text-[16px]" data-icon="history_edu">history_edu</span>
+<span>Transcription by Maestro Lorenzo</span>
+</div>
+</div>
+</div>
+<!-- Main Desktop Playback Controls -->
+<div class="mt-8 hidden md:flex items-center gap-12">
+<button class="text-secondary hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-[32px]" data-icon="shuffle">shuffle</span>
+</button>
+<button class="text-secondary hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-[48px]" data-icon="skip_previous">skip_previous</span>
+</button>
+<button class="w-20 h-20 bg-gradient-to-b from-secondary to-secondary-container rounded-full flex items-center justify-center text-on-secondary shadow-lg shadow-secondary/20 hover:shadow-secondary/40 transition-all duration-500 active:scale-95 active-ring">
+<span class="material-symbols-outlined text-[40px] fill-icon" data-icon="play_arrow">play_arrow</span>
+</button>
+<button class="text-secondary hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-[48px]" data-icon="skip_next">skip_next</span>
+</button>
+<button class="text-secondary hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-[32px]" data-icon="repeat">repeat</span>
+</button>
+</div>
+</div>
+<!-- Right: Dynamic Score & Commentary -->
+<div class="lg:col-span-5 flex flex-col space-y-gutter">
+<!-- Score Area -->
+<div class="bg-surface-container-low-light/80 dark:bg-surface-container-low-dark/80 backdrop-blur-md p-8 rounded-xl border border-secondary/20 shadow-xl min-h-[400px] flex flex-col transition-colors duration-500">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-label-sm text-label-sm text-secondary uppercase tracking-widest">Manuscript View</h3>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-secondary cursor-pointer" data-icon="zoom_in">zoom_in</span>
+<span class="material-symbols-outlined text-on-surface-variant-light dark:text-on-surface-variant-dark cursor-pointer" data-icon="more_vert">more_vert</span>
+</div>
+</div>
+<!-- Mock Sheet Music Section -->
+<div class="flex-grow flex flex-col justify-center space-y-6 overflow-hidden">
+<div class="relative py-4 border-y border-on-surface-variant-light/10 dark:border-on-surface-variant-dark/10">
+<img alt="Musical manuscript" class="w-full opacity-60 grayscale brightness-125 dark:brightness-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0nd65qC5PUaJQgHtBoW__zFOR6t34TYbbJaq9-1ks0_tGfJ5lfFSZ8tbi4phGn34Em5pQlqoJ7dye8PWnO47tkMD_onpyq0B2y2fpDR4En1vBsqyWQhFaQiPYAPeiZ6XnA0jDs8_SiDENP1Dm_DtYk3jKPOQnOg_H_Z5_pkBsoQn4cmtLmnNbRafJAilgvs2uujVXwywnkChgp9H68Fy-eOXsjKNamRCnnabmuxRSuBopXbaR42eCoqiVV7c47uN2GEaHzWIIEIQ"/>
+<!-- Scrubber Indicator -->
+<div class="absolute top-0 bottom-0 left-1/3 w-[2px] bg-secondary shadow-[0_0_8px_rgba(233,193,118,0.8)] z-10">
+<div class="absolute -top-1 left-1/2 -translate-x-1/2 w-3 h-3 bg-secondary rounded-full border-2 border-background-light dark:border-background-dark"></div>
+</div>
+</div>
+<div class="space-y-4 font-body-lg text-body-lg text-on-surface-light/90 dark:text-on-surface-dark/90 italic text-center px-4">
+<p class="animate-pulse">"The bow should dance across the strings like a feather caught in an autumn draft..."</p>
+<div class="f-hole-divider !my-4"></div>
+<p class="text-on-surface-variant-light/60 dark:text-on-surface-variant-dark/60 font-body-md text-body-md">Variation III: Adagio Sostenuto</p>
+</div>
+</div>
+<!-- Scrubber Bar -->
+<div class="mt-8 space-y-2">
+<div class="relative h-[2px] bg-surface-container-highest-light dark:bg-surface-container-highest-dark w-full rounded-full overflow-hidden">
+<div class="absolute h-full bg-secondary w-1/3 shadow-[0_0_10px_#e9c176]"></div>
+</div>
+<div class="flex justify-between font-label-sm text-label-sm text-on-surface-variant-light/70 dark:text-on-surface-variant-dark/70">
+<span>01:42</span>
+<span>04:15</span>
+</div>
+</div>
+</div>
+<!-- Up Next Card -->
+<div class="bg-surface-container-low-light/40 dark:bg-surface-container-low-dark/40 backdrop-blur-sm p-6 rounded-xl border border-secondary/10 hover:border-secondary/30 transition-all cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-lg overflow-hidden border border-secondary/20">
+<img alt="Up Next Album" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJ1YzW_gVemOCmG8ze2r6T7PjkivDlF96IPQhUvM0vJx-dWFncwlVODkqhgdKgf0NDtEMWwOvHyjCeqTe6NJrORuxqU6tvVagY-Q2-X2XJR64_srlU46kBEGY5-sfyV9aMYpdvbe3M3aL4pFzLh1J3MVSCkPlYOkVryaeTK1kKdxnpFJGAKN0RJ5LI-PRX6v389bnQ5pGPVHnASy3s-rDNhvYY8oI-odHRoEybD9Sv0Z-GKZmQFJ3wu3fcJebxP0I-v7xkMftUKsc"/>
+</div>
+<div class="flex-grow">
+<p class="font-label-sm text-label-sm text-secondary uppercase mb-1">Up Next</p>
+<h4 class="font-headline-md text-body-lg text-on-surface-light dark:text-on-surface-dark">The Cello Suites, BWV 1007</h4>
+<p class="font-body-md text-on-surface-variant-light dark:text-on-surface-variant-dark">J.S. Bach — Conservatory Recording</p>
+</div>
+<span class="material-symbols-outlined text-secondary opacity-0 group-hover:opacity-100 transition-opacity" data-icon="play_circle">play_circle</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Player Control Bar -->
+<nav class="fixed bottom-0 w-full h-24 z-50 bg-surface-container-highest-light/90 dark:bg-surface-container-highest-dark/90 backdrop-blur-2xl border-t border-secondary/40 shadow-[0_-4px_20px_rgba(6,44,33,0.2)] dark:shadow-[0_-4px_20px_rgba(6,44,33,0.5)] transition-colors duration-500">
+<div class="flex flex-col items-center justify-center px-margin-mobile w-full h-full max-w-container-max mx-auto">
+<div class="flex items-center justify-between w-full">
+<!-- Mobile Track Info -->
+<div class="flex md:hidden items-center gap-3">
+<div class="w-10 h-10 rounded bg-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary" data-icon="music_note">music_note</span>
+</div>
+<div>
+<p class="font-label-sm text-[10px] text-secondary truncate w-24">CAPRICE NO. 24</p>
+<p class="font-body-md text-xs text-on-surface-light dark:text-on-surface-dark truncate w-24">Paganini</p>
+</div>
+</div>
+<!-- Controls Layout -->
+<div class="flex items-center gap-8 md:gap-12 mx-auto">
+<div class="flex flex-col items-center group cursor-pointer text-on-surface-light/70 dark:text-on-surface-dark/70 hover:text-secondary hover:scale-105 transition-transform duration-200">
+<span class="material-symbols-outlined" data-icon="skip_previous">skip_previous</span>
+<span class="font-label-sm text-label-sm mt-1 uppercase">Previous</span>
+</div>
+<div class="flex flex-col items-center group cursor-pointer text-secondary scale-110 transition-transform duration-200">
+<span class="material-symbols-outlined text-[32px] fill-icon" data-icon="play_circle">play_circle</span>
+<span class="font-label-sm text-label-sm mt-1 uppercase">Play</span>
+</div>
+<div class="flex flex-col items-center group cursor-pointer text-on-surface-light/70 dark:text-on-surface-dark/70 hover:text-secondary hover:scale-105 transition-transform duration-200">
+<span class="material-symbols-outlined" data-icon="skip_next">skip_next</span>
+<span class="font-label-sm text-label-sm mt-1 uppercase">Next</span>
+</div>
+<div class="hidden sm:flex flex-col items-center group cursor-pointer text-on-surface-light/70 dark:text-on-surface-dark/70 hover:text-secondary hover:scale-105 transition-transform duration-200">
+<span class="material-symbols-outlined" data-icon="volume_up">volume_up</span>
+<span class="font-label-sm text-label-sm mt-1 uppercase">Volume</span>
+</div>
+</div>
+<!-- Secondary Actions -->
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary cursor-pointer gold-glow fill-icon" data-icon="favorite">favorite</span>
+<span class="material-symbols-outlined text-on-surface-variant-light dark:text-on-surface-variant-dark cursor-pointer hover:text-secondary" data-icon="share">share</span>
+</div>
+</div>
+<!-- Bottom Scrubber (Mobile) -->
+<div class="md:hidden w-full h-1 bg-surface-container-low-light dark:bg-surface-container-low-dark mt-4 rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-1/3"></div>
+</div>
+</div>
+</nav>
+<script>
+    // Theme Toggle Logic
+    const themeToggle = document.getElementById('theme-toggle');
+    const htmlElement = document.documentElement;
+
+    themeToggle.addEventListener('click', () => {
+        if (htmlElement.classList.contains('dark')) {
+            htmlElement.classList.remove('dark');
+            htmlElement.classList.add('light');
+        } else {
+            htmlElement.classList.remove('light');
+            htmlElement.classList.add('dark');
+        }
+    });
+
+    // Micro-interaction for Play Button
+    const playBtnContainer = document.querySelector('[data-icon="play_circle"]').parentElement;
+    let isPlaying = true;
+    
+    playBtnContainer.addEventListener('click', () => {
+        isPlaying = !isPlaying;
+        const icon = playBtnContainer.querySelector('.material-symbols-outlined');
+        icon.textContent = isPlaying ? 'play_circle' : 'pause_circle';
+        
+        if(!isPlaying) {
+            playBtnContainer.classList.remove('scale-110');
+        } else {
+            playBtnContainer.classList.add('scale-110');
+        }
+    });
+
+    // Add subtle parallax to the main image
+    window.addEventListener('mousemove', (e) => {
+        const img = document.querySelector('img[alt*="Stradivarius"]');
+        const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
+        const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
+        img.style.transform = `scale(1.05) translate(${moveX}px, ${moveY}px)`;
+    });
+</script>
+</body></html>

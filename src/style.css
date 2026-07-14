@@ -1,0 +1,221 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .vellum-layer {
+    background: rgba(32, 32, 25, 0.15);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 0.5px solid rgba(233, 193, 118, 0.3);
+    transition: background 0.3s ease, border 0.3s ease, transform 0.5s ease, box-shadow 0.5s ease;
+  }
+  .light .vellum-layer {
+    background: rgba(241, 238, 227, 0.7);
+    border: 0.5px solid rgba(115, 92, 0, 0.15);
+  }
+  .vellum-layer:hover {
+    box-shadow: 0 0 30px rgba(197, 160, 89, 0.15);
+  }
+
+  .parchment-texture {
+    background-image: radial-gradient(circle at 50% 50%, rgba(229, 226, 216, 0.05) 0%, transparent 100%);
+  }
+  .light .parchment-texture {
+    background-image: radial-gradient(circle at 50% 50%, rgba(115, 92, 0, 0.03) 0%, transparent 100%);
+  }
+
+  .gold-border-focus::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 1px;
+    background: #e9c176;
+    transition: width 0.4s ease, left 0.4s ease;
+  }
+  .light .gold-border-focus::after {
+    background: #735c00;
+  }
+  .gold-border-focus:focus-within::after {
+    width: 100%;
+    left: 0;
+  }
+
+  .ornamental-divider {
+    position: relative;
+    height: 1px;
+    background: rgba(233, 193, 118, 0.2);
+    width: 100%;
+    margin: 2rem 0;
+  }
+  .light .ornamental-divider {
+    background: rgba(115, 92, 0, 0.1);
+  }
+  .ornamental-divider::after {
+    content: '❦';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: #14140e;
+    padding: 0 1rem;
+    color: #e9c176;
+    font-size: 1.2rem;
+  }
+  .light .ornamental-divider::after {
+    background: #fdf9ee;
+    color: #735c00;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+  .custom-scrollbar::-webkit-scrollbar-track { background: #14140e; }
+  .light .custom-scrollbar::-webkit-scrollbar-track { background: #fdf9ee; }
+  .custom-scrollbar::-webkit-scrollbar-thumb { background: #e9c176; border-radius: 2px; }
+  .light .custom-scrollbar::-webkit-scrollbar-thumb { background: #735c00; }
+
+  .brass-slider {
+    transition: opacity 0.3s ease;
+  }
+  .brass-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    background: radial-gradient(circle at 30% 30%, #e9c176, #604403);
+    border: 1px solid #c5a059;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+  }
+  .brass-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 12px rgba(233, 193, 118, 0.6);
+  }
+  .brass-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    background: radial-gradient(circle at 30% 30%, #e9c176, #604403);
+    border: 1px solid #c5a059;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+  }
+  .brass-slider::-moz-range-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 12px rgba(233, 193, 118, 0.6);
+  }
+
+  .waveform-score {
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  }
+
+  .botanical-watermark {
+    opacity: 0.08;
+    pointer-events: none;
+    filter: sepia(1) saturate(0.5);
+    transition: opacity 0.5s ease;
+  }
+  .dark .botanical-watermark {
+    opacity: 0.05;
+  }
+
+  .gold-glow:hover {
+    box-shadow: 0 0 25px rgba(197, 160, 89, 0.5);
+    transform: translateY(-2px);
+  }
+
+  .interactive-glow {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .interactive-glow:hover {
+    text-shadow: 0 0 10px rgba(233, 193, 118, 0.4);
+    filter: drop-shadow(0 0 5px rgba(233, 193, 118, 0.2));
+  }
+
+  .vellum-card {
+    backdrop-filter: blur(12px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .dark .vellum-card {
+    background: rgba(32, 32, 25, 0.6);
+    border: 0.5px solid rgba(197, 160, 89, 0.3);
+  }
+  .light .vellum-card {
+    background: #F7F4E9;
+    border: 1px solid rgba(197, 160, 89, 0.2);
+    box-shadow: inset 0 0 40px rgba(197, 160, 89, 0.05), 0 2px 10px rgba(0,0,0,0.05);
+  }
+  .vellum-card:hover {
+    border-color: #C5A059;
+    transform: translateY(-4px);
+  }
+  .dark .vellum-card:hover {
+    box-shadow: 0 10px 30px -10px rgba(6, 44, 33, 0.8);
+  }
+  .light .vellum-card:hover {
+    box-shadow: 0 15px 35px -12px rgba(197, 160, 89, 0.3);
+  }
+
+  .ornamental-rule {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 2rem 0;
+  }
+  .ornamental-rule::before,
+  .ornamental-rule::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(197, 160, 89, 0.5), transparent);
+  }
+
+  .f-hole-divider {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.5rem;
+    color: #C5A059;
+    padding: 0 1rem;
+    opacity: 0.7;
+    background: #14140e;
+  }
+  .light .f-hole-divider {
+    background: #fdf9ee;
+  }
+
+  .manuscript-input {
+    border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+    background: transparent;
+    transition: border-color 0.3s ease;
+  }
+  .manuscript-input:focus {
+    outline: none;
+    border-bottom-color: #C5A059;
+  }
+
+  .active-ring {
+    animation: pulse-gold 2s infinite;
+  }
+}
+
+@keyframes pulse-gold {
+  0% { box-shadow: 0 0 0 0 rgba(233, 193, 118, 0.4); }
+  70% { box-shadow: 0 0 0 15px rgba(233, 193, 118, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(233, 193, 118, 0); }
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+  vertical-align: middle;
+}
+
+body {
+  background-image: url("https://www.transparenttextures.com/patterns/p6.png"); /* Subtle paper grain */
+  scrollbar-width: thin;
+  scrollbar-color: #C5A059 #062C21;
+}
