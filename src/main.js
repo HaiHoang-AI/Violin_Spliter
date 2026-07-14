@@ -135,11 +135,7 @@ function playTrack(track, isStems = false, violinStemUrl = null, bgStemUrl = nul
   stopAudioInterval();
   
   if (isDualMode && violinStemUrl && bgStemUrl) {
-    // Play real separated stems
-    audioViolin.src = violinStemUrl;
-    audioBg.src = bgStemUrl;
-    
-    // Cross-origin support (only for remote URLs)
+    // Cross-origin support (only for remote URLs) - MUST BE SET BEFORE SRC
     if (violinStemUrl.startsWith('blob:') || violinStemUrl.startsWith('data:')) {
       audioViolin.removeAttribute('crossOrigin');
     } else {
@@ -151,6 +147,10 @@ function playTrack(track, isStems = false, violinStemUrl = null, bgStemUrl = nul
     } else {
       audioBg.crossOrigin = "anonymous";
     }
+
+    // Play real separated stems
+    audioViolin.src = violinStemUrl;
+    audioBg.src = bgStemUrl;
     
     audioViolin.load();
     audioBg.load();
@@ -159,15 +159,15 @@ function playTrack(track, isStems = false, violinStemUrl = null, bgStemUrl = nul
     filterViolin.gain.value = 0;
     filterBg.gain.value = 0;
   } else {
-    // Play normal full track
-    audioViolin.src = track.url;
-    
+    // Cross-origin support (only for remote URLs) - MUST BE SET BEFORE SRC
     if (track.url && (track.url.startsWith('blob:') || track.url.startsWith('data:'))) {
       audioViolin.removeAttribute('crossOrigin');
     } else {
       audioViolin.crossOrigin = "anonymous";
     }
-    
+
+    // Play normal full track
+    audioViolin.src = track.url;
     audioViolin.load();
     
     // Clear background audio
